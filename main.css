@@ -1,0 +1,150 @@
+body {
+    text-align: center;
+    background-color: #252525;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#label {
+    width: 4in;
+    height: 2.125in;
+    margin: auto;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.logo {
+    filter: grayscale(100%);
+    transform: rotate(270deg);
+    position: absolute;
+    margin-left: -268px;
+    margin-top: 84px; /* that looks centered...? */
+    max-width: 2in;
+}
+
+
+#lower {
+    width: 6in;
+    height: 2.25in;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.barcode {
+    position: relative;
+    /* margin-top: 2px; */
+}
+
+.bcNote {
+    position: absolute;
+    margin-top: 42px;
+    margin-left: 25px;
+    z-index: 99;
+}
+
+.note {
+    margin: 0;
+    margin-top: 2px;
+}
+
+.data {
+    margin-left: 7%;
+}
+
+.section {
+    height: 0.7083in;
+}
+
+.flex {
+    display: flex;
+}
+
+.subsection {
+    height: 100%;
+    width: 33.33%;
+}
+
+.vr {
+    border-right: 2px solid #000;
+}
+
+.larger {
+    font-size: 24px;
+    margin: auto;
+    margin-top: 12px;
+}
+
+hr {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    border-color: #000;
+    border-style: solid;
+    z-index: 99;
+    position: relative;
+}
+
+.noHrMargin {
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.warnings {
+    width: 30%;
+    float: right;
+    /* background-color: aquamarine; */
+}
+
+.warning {
+    background-color: red;
+    height: auto;
+    min-height: 30px;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.warningMessage {
+    margin: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #FFF;
+}
+
+.print {
+    margin-top: 15px;
+    width: 100px;
+    height: auto;
+}
+
+.printSvg {
+    width: 50px;
+}
+
+@media print {
+    @page {
+        size: 54mm 101mm;
+        size: landscape;
+        margin: 0px;
+    }
+    body {
+        height: 2.125in !important;
+        width: 4in !important;
+        margin: 0;
+        padding: 0;
+    }
+    #label {
+        margin-top: 0px !important;
+    }
+    .noprint {
+        display: none !important;
+    }
+}
+
