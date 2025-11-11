@@ -69,15 +69,15 @@ function generatePartNumber(pn, rev){
         addWarningMessage('Part number is greater than 17 characters. Check part number is correct.')
         return;
     } else if (pn.length < 1) {
-        addWarningMessage('Part number is less than 1 character. Check rev number is correct.')
-        // return;
+        addWarningMessage('Part number is less than 1 character.')
+        return;
     }
     if (rev.length > 3){
         addWarningMessage('Rev number is greater than 3 characters. Check rev number is correct.')
         return;
     } else if (rev.length < 1) {
-        addWarningMessage('Rev number is less than 1 character.')
-        return;
+        addWarningMessage('Rev number is less than 1 character. Check rev number is correct.')
+        // return;
     }
 
     let part, revn;
