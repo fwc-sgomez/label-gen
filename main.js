@@ -169,9 +169,12 @@ function handlePrint() {
         addWarningMessage('Cannot print: part number is empty or is template part number. Use Ctrl+P to bypass.')
         return;
     }
-    if (!rev || (rev == '??')) {
+    if (rev.contains('?')) {
         addWarningMessage('Cannot print: rev number is empty or is unknown. Use Ctrl+P to bypass.')
         return;
+    } else if (!rev) {
+        confirmed = confirm('Rev number is empty. Print regardless?')
+        if (!confirmed) return;
     }
     if (!wo) {
         confirmed = confirm('No work order number is entered. Print regardless?')
