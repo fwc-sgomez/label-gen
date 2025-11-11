@@ -103,7 +103,7 @@ function updateLotBarcode(){
     const wo = document.getElementById('wonum').value
     const cleanWo = wo.replaceAll('-', '')
     const d = new Date()
-    const date = (d.getMonth() + 1).toString()+d.getDate().toString()+d.getFullYear().toString()
+    const date = (d.getMonth() + 1).toString()+d.getDate().toString()+d.getFullYear().toString().slice(2, 4) // remove the first 2 characters...
 
     document.getElementById('lbWoNum').textContent = wo
 
@@ -112,6 +112,9 @@ function updateLotBarcode(){
         lotCode = input
     }
 
+    if (lotCode.length > 15) {
+        addWarningMessage('Lot code is longer than 15 characters! This may not be accepted in GSS.')
+    }
     generateBarcode('#lotBc', lotCode, 2)
 }
 
