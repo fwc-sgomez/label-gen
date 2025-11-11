@@ -170,7 +170,7 @@ function handlePrint() {
         addWarningMessage('Cannot print: part number is empty or is template part number. Use Ctrl+P to bypass.')
         return;
     }
-    if (rev.contains('?')) {
+    if (rev.includes('?')) {
         addWarningMessage('Cannot print: rev number is unknown. Use Ctrl+P to bypass.')
         return;
     } else if (!rev) {
