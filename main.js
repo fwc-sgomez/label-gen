@@ -156,6 +156,7 @@ function addWarningMessage(message, duration = 5) {
     parent.append(warningDiv)
 }
 
+// some simple validation to check if data is filled in
 function handlePrint() {
     const pn = document.getElementById('part').value
     const rev = document.getElementById('rev').value
@@ -170,7 +171,7 @@ function handlePrint() {
         return;
     }
     if (rev.contains('?')) {
-        addWarningMessage('Cannot print: rev number is empty or is unknown. Use Ctrl+P to bypass.')
+        addWarningMessage('Cannot print: rev number is unknown. Use Ctrl+P to bypass.')
         return;
     } else if (!rev) {
         confirmed = confirm('Rev number is empty. Print regardless?')
