@@ -69,8 +69,8 @@ function generatePartNumber(pn, rev){
         addWarningMessage('Part number is greater than 17 characters. Check part number is correct.')
         return;
     } else if (pn.length < 1) {
-        addWarningMessage('Part number is less than 1 character.')
-        return;
+        addWarningMessage('Part number is less than 1 character. Check rev number is correct.')
+        // return;
     }
     if (rev.length > 3){
         addWarningMessage('Rev number is greater than 3 characters. Check rev number is correct.')
@@ -79,8 +79,17 @@ function generatePartNumber(pn, rev){
         addWarningMessage('Rev number is less than 1 character.')
         return;
     }
-    const part = (pn + ' '.repeat(17 - pn.length))
-    const revn = (rev + ' '.repeat(3 - rev.length))
+
+    let part, revn;
+    if (rev.length < 1) {
+        // if no rev number, pn stays at whatever it was with 0 trailing spaces.
+        part = pn
+        revn = ''
+    } else {
+        // if rev number exists, pn is 20 char, part 17 and rev 3.
+        part = (pn + ' '.repeat(17 - pn.length))
+        revn = (rev + ' '.repeat(3 - rev.length))
+    }
     return (part+revn)
 }
 
