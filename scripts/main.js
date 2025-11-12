@@ -110,11 +110,19 @@ function generatePartNumber(pn, rev){
         showWarningMessage('Rev number is greater than 3 characters. Check rev number is correct.')
         return;
     } else if (rev.length < 1) {
-        showWarningMessage('Rev number is less than 1 character.')
-        return;
+        showWarningMessage('Rev number is less than 1 character. Check rev number is correct.')
+        // return;
     }
-    const part = (pn + ' '.repeat(17 - pn.length))
-    const revn = (rev + ' '.repeat(3 - rev.length))
+    let part, revn;
+    if (rev.length < 1) {
+        // if no rev number, pn stays at whatever it was with 0 trailing spaces.
+        part = pn
+        revn = ''
+    } else {
+        // if rev number exists, pn is 20 char, part 17 and rev 3.
+        part = (pn + ' '.repeat(17 - pn.length))
+        revn = (rev + ' '.repeat(3 - rev.length))
+    }
     return (part+revn)
 }
 
@@ -144,7 +152,7 @@ function updateLotBarcode(){
 
 function generateMachLot(woNum){
     const cleanWo = woNum.replaceAll('-', '')
-    return cleanWo+generateDate()
+    return cleanWo+generateDate('MMDDYY')
 
 }
 
@@ -176,7 +184,6 @@ function handlePrint() {
     const empId = gebi('emp').value
     const qty = gebi('qty').value
 
-    let confirmed = false
     if (!pn || (pn == '00000XX0000')) {
         // confirm('no part number, or ')
         showWarningMessage('Cannot print: part number is empty or is template part number. Use Ctrl+P to bypass.')
@@ -185,24 +192,20 @@ function handlePrint() {
         showWarningMessage('Cannot print: part number is too long and barcode has not been updated. Use Ctrl+P to bypass.')
         return;
     }
-    if (!rev || (rev == '??')) {
-        showWarningMessage('Cannot print: rev number is empty or is unknown. Use Ctrl+P to bypass.')
+    if (rev.includes('?')) {
+        addWarningMessage('Cannot print: rev number is unknown. Use Ctrl+P to bypass.')
         return;
-    } else if (rev.length > 3) {
-        showWarningMessage('Cannot print: rev number is too long and barcode has not been updated. Use Ctrl+P to bypass.')
-        return;
+    } else if (!rev) {
+        if (!confirm('Rev number is empty. Print regardless?')) return;
     }
     if (!wo) {
-        confirmed = confirm('No work order number is entered. Print regardless?')
-        if (!confirmed) return;
+        if (!confirm('No work order number is entered. Print regardless?')) return;
     }
     if (!empId) {
-        confirmed = confirm('No employee ID is entered. Print regardless?')
-        if (!confirmed) return;
+        if (!confirm('No employee ID is entered. Print regardless?')) return;
     }
     if (!qty) {
-        confirmed = confirm('No qty is entered. Print regardless?')
-        if (!confirmed) return;
+        if (!confirm('No qty is entered. Print regardless?')) return;
     }
 
     print()
@@ -233,17 +236,18 @@ function serialisePrintData() {
 
 
 /**
- * returns current date as MMDDYYY by default.
+ * returns current date as MMDDYYYY by default.
  * @param { string } formatOverride
- * accepts MM, DD, and/or YYYY only. default is MMDDYYYY but can be something like MM-DD-YYYY
- * @param { Date | number | undefined } date 
+ * accepts MM, DD, and/or YYYY | YY only. default is MMDDYYYY but can be something like MM-DD-YYYY
+ * @param { Date | number | string | undefined } date 
  */
 function generateDate(formatOverride = '', date = 0){
     const d = new Date(date ? date : Date.now())
-    let fmt = formatOverride || 'MMDDYYYY'
+    let fmt = formatOverride.toUpperCase() || 'MMDDYYYY'
     let day = d.getDate().toString() 
     let month = (d.getMonth() + 1).toString()
-    const year = d.getFullYear().toString()
+    let year = d.getFullYear().toString()
+    let yearShort = year.slice(2, 4)
 
     if (day.length < 2) {day = ('0' + day)}
     if (month.length < 2) {month = ('0' + month)}
@@ -251,6 +255,7 @@ function generateDate(formatOverride = '', date = 0){
     fmt = fmt.replaceAll('DD', day)
     fmt = fmt.replaceAll('MM', month)
     fmt = fmt.replaceAll('YYYY', year)
+    fmt = fmt.replaceAll('YY', yearShort)
 
     return fmt
 }
