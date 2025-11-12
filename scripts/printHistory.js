@@ -1,24 +1,11 @@
 function saveToPrintHistory() {
-    const printsData = lsRead('prints')
-    let printsJson;
-    if (printsData) {
-        printsJson = JSON.parse(printsData)
-    } else {
-        printsJson = []
-    }
+    const prints = lsReadJson('prints')
+    const settings = lsReadJson('settings')
     
-    const settingsData = lsRead('settings')
-    let settingsJson;
-    if (settingsData) {
-        settingsJson = JSON.parse(settingsData)
-    } else {
-        init()
-        // ?
-    }
 
     const data = {
-        lbType: settingsData.lbType,
-        id: printsJson.length,
+        lbType: settings.lbType,
+        id: prints.length,
         company: gebi('company').selectedIndex,
         part: gebi('part').value,
         rev: gebi('rev').value,
@@ -31,8 +18,8 @@ function saveToPrintHistory() {
     }
     console.log(data)
 
-    printsJson.push(data)
-    lsStore('prints', printsJson)
+    prints.push(data)
+    lsStore('prints', prints)
 }
 
 function loadPrintHistory() {
@@ -54,7 +41,7 @@ function loadPrintHistory() {
         const div_label = document.createElement('div')
         div_label.className = 'phLabel'
         div_label.addEventListener('click', (e) => {
-            loadPrint(print.id)
+            reloadPrint(print.id)
         })
         
 
@@ -97,14 +84,22 @@ function clearPrintHistory() {
     gebi('prints').innerHTML = ''
 }
 
-function loadPrint(id) {
-    const data = lsRead('prints')
-    let json;
-    if (!data) {
-        return;
-    } else {
-        json = JSON.parse(data)
-    }
-    console.log(json[id])
+function reloadPrint(id) {
+    const prints = lsReadJson('prints')
+    const print = prints[id]
     
+    gebi('part').value = print.part
+    gebi('rev').value = print.rev
+    gebi('lot').value = print.lot
+    gebi('wonum').value = print.wo
+    gebi('emp').value = print.empId
+    gebi('lbEmpId').textContent = print.empId
+    gebi('qty').value = print.qty
+    gebi('lbQty').textContent = print.qty
+    gebi('company').selectedIndex = print.company
+    gebi('labelType').selectedIndex = print.lbType
+
+    updatePnBarcode()
+    updateLotBarcode()
+    updateCompany()
 }

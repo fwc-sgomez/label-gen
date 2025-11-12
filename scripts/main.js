@@ -1,11 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => { // hmm
-    checkUrlParams() // check params first, then update other elements.
+    // setup stuff
+    setFromSettings() // prepares defaults
+
+    //
+    checkUrlParams() // then check url params so the rest can be updated accordingly
+
     updatePnBarcode()
     updateLotBarcode()
     updateCompany()
     detectBrowser()
     loadPrintHistory()
 })
+
+const Companies = {
+    Fwc: 'fwc',
+    Cf: 'cf'
+}
+
+const LabelTypes = [
+    'machwip',
+    'invltdshelf',
+    'invwipfg',
+    'invrec'
+]
+
+function setFromSettings() {
+    const settings = lsReadJson('settings')
+    gebi('labelType').selectedIndex = settings.lbType
+    gebi('company').selectedIndex = settings.cmp
+}
 
 function checkUrlParams(){
     const params = new URLSearchParams(window.location.search)
@@ -19,7 +42,6 @@ function checkUrlParams(){
     if ((urlPart && urlWo) || (urlPart && !urlWo)) {
         handlePnParam(urlPart)
     }
-
     
     // work order number stuff
     if (urlWo) {
@@ -45,7 +67,6 @@ function checkUrlParams(){
         // not used yet, but some options would be like mach schedule
         // would be used to determine label type/format.
     }
-
 }
 
 function handlePnParam(partNumber) {
@@ -127,32 +148,47 @@ function generatePartNumber(pn, rev){
 }
 
 function updateCompany(){
-    const select = gebi('company').value
-    gebi('logo').src = `./img/${select}.png`
+    const select = gebi('company')
+    gebi('logo').src = `./img/${select.value}.png`
+    updateSetting('cmp', select.selectedIndex)
 }
 
 let lotCode;
 function updateLotBarcode(){
     const input = gebi('lot').value
     const wo = gebi('wonum').value
+    const cc = gebi('cc').value
 
     gebi('lbWoNum').textContent = wo
 
-    lotCode = generateMachLot(wo)
+    lotCode = generateMachLot(wo, cc)
     if (input) {
         lotCode = input
+        gebi('lotNote').hidden = false
+    } else {
+        gebi('lotNote').hidden = true
     }
 
     if (wo.length > 10) {
         showWarningMessage('Unusually long work order number. Check work order number is correct.')
     }
 
+    if (lotCode.length > 15) {
+        showWarningMessage('Lot code is longer than 15 characters! This may not be accepted in GSS.')
+    }
+
     generateBarcode('#lotBc', lotCode, 2)
 }
 
-function generateMachLot(woNum){
+function generateMachLot(woNum, cc = false){
     const cleanWo = woNum.replaceAll('-', '')
-    return cleanWo+generateDate('MMDDYY')
+    let date;
+    if (cc) {
+        date = generateDate('MMDD')
+    } else {
+        date = generateDate('MMDDYY')
+    }
+    return cleanWo+date+cc
 
 }
 
@@ -175,14 +211,13 @@ function generateBarcode(element, text, cWidth){
     })
 }
 
-
-
 function handlePrint() {
     const pn = gebi('part').value
     const rev = gebi('rev').value
     const wo = gebi('wonum').value
     const empId = gebi('emp').value
     const qty = gebi('qty').value
+
 
     if (!pn || (pn == '00000XX0000')) {
         // confirm('no part number, or ')
@@ -211,7 +246,6 @@ function handlePrint() {
     print()
 }
 
-
 window.addEventListener("afterprint", (event) => {
     console.log(event)
     saveToPrintHistory()
@@ -219,43 +253,13 @@ window.addEventListener("afterprint", (event) => {
     
 });
 
-let printData;
-function serialisePrintData() {
-    printData = new Print()
+function updateSetting(setting, value) {
+    const settings = lsReadJson('settings')
+    if (settings.hasOwnProperty(setting)) {
+        settings[setting] = value
 
-    printData.Company = gebi('company').selectedIndex
-    printData.Part = gebi('part').value
-    printData.Rev = gebi('rev').value
-    printData.WO = gebi('wonum').value
-    printData.EmpId = gebi('emp').value
-    printData.Qty = gebi('qty').value
-    printData.Lot = lotCode // lot code is generated in updateLotBarcode() and itn't accessible elsewhere so i made lotCode global instead...
-    printData.FullPart = fullPn // same thing as lot- made global
-}
-
-
-
-/**
- * returns current date as MMDDYYYY by default.
- * @param { string } formatOverride
- * accepts MM, DD, and/or YYYY | YY only. default is MMDDYYYY but can be something like MM-DD-YYYY
- * @param { Date | number | string | undefined } date 
- */
-function generateDate(formatOverride = '', date = 0){
-    const d = new Date(date ? date : Date.now())
-    let fmt = formatOverride.toUpperCase() || 'MMDDYYYY'
-    let day = d.getDate().toString() 
-    let month = (d.getMonth() + 1).toString()
-    let year = d.getFullYear().toString()
-    let yearShort = year.slice(2, 4)
-
-    if (day.length < 2) {day = ('0' + day)}
-    if (month.length < 2) {month = ('0' + month)}
-
-    fmt = fmt.replaceAll('DD', day)
-    fmt = fmt.replaceAll('MM', month)
-    fmt = fmt.replaceAll('YYYY', year)
-    fmt = fmt.replaceAll('YY', yearShort)
-
-    return fmt
+        lsStore('settings', settings)
+    } else {
+        console.warn(`key ${setting} does not exist in settings.`)
+    }
 }

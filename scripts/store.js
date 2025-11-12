@@ -1,16 +1,17 @@
 
 const ver = '1.1.0'
-const debug = true
+const debug = false
 
 const defaultSettings = {
     init: true,
-    lbType: 'machwip',
-    ver: ver
+    lbType: 0,
+    ver: ver,
+    cmp: 0
 }
 
 function init() {
-    const settings = JSON.parse(lsRead('settings'))
-    if (!settings.ver) {
+    const settings = lsReadJson('settings')
+    if (!settings.init) {
         console.log('initialising settings!')
         lsStore('settings', defaultSettings)
         lsStore('prints', '[]') // init empty array
@@ -19,12 +20,12 @@ function init() {
 
 /**
  * store data into a key
- * @param {string} key 
- * @param {string | JSON} data 
+ * @param {string} key key of data to store data to
+ * @param {string | JSON} data json or string to store
  * @returns nothing
  */
 function lsStore(key, data) {
-    consoleDbg(`WRITE KEY: ${key}\nWRITE DATA: ${data}`)
+    consoleDbg(`WRITE KEY: ${key}\nWRITE DATA: ${data}`) // [object Object]
     if (!key || !data) {
         console.warn('key or data args missing!')
         showWarningMessage('internal error occured!', 5)
@@ -57,10 +58,25 @@ function lsRead(key) {
     return r
 }
 
+function lsReadJson(key) {
+    const data = lsRead(key)
+    if (!data){
+        return {}
+    } else {
+        return JSON.parse(data)
+    }
+        
+}
+
 
 
 function consoleDbg(data) {
     if (debug){
         console.log(data)
     }
+}
+
+function dbgForceInit() {
+    updateSetting('init', false)
+    init()
 }

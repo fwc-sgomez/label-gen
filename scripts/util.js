@@ -14,7 +14,7 @@ function detectBrowser() {
 }
 
 function firstTime(){
-
+    
 }
 
 /**
@@ -61,3 +61,29 @@ function showWarningMessage(message, duration = 5, color = 'red') {
 
     parent.append(warningDiv)
 }
+
+/**
+ * returns current date as MMDDYYYY by default.
+ * @param { string } formatOverride
+ * accepts MM, DD, and/or YYYY | YY only. default is MMDDYYYY but can be something like MM-DD-YYYY
+ * @param { Date | number | string | undefined } date 
+ */
+function generateDate(formatOverride = '', date = 0){
+    const d = new Date(date ? date : Date.now())
+    let fmt = formatOverride.toUpperCase() || 'MMDDYYYY'
+    let day = d.getDate().toString() 
+    let month = (d.getMonth() + 1).toString()
+    let year = d.getFullYear().toString()
+    let yearShort = year.slice(2, 4)
+
+    if (day.length < 2) {day = ('0' + day)}
+    if (month.length < 2) {month = ('0' + month)}
+
+    fmt = fmt.replaceAll('DD', day)
+    fmt = fmt.replaceAll('MM', month)
+    fmt = fmt.replaceAll('YYYY', year)
+    fmt = fmt.replaceAll('YY', yearShort)
+
+    return fmt
+}
+

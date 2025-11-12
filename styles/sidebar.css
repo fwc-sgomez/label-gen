@@ -1,11 +1,12 @@
 .sidebar {
     /* background-color: aliceblue; */
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: auto;
     overflow: auto;
     border-right: 2px solid #000;
     min-width: 300px;
+    margin-top: 50px;
 }
 
 .phLabel {
@@ -40,6 +41,6 @@
     cursor: pointer;
 }
 
-.header {
+.phHeader {
     color: #FFF;
 }
