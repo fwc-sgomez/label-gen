@@ -27,6 +27,7 @@ const LabelTypes = [
 function setFromSettings() {
     const settings = lsReadJson('settings')
     gebi('labelType').selectedIndex = settings.lbType
+    lbTypeChange(settings.lbType)
     gebi('company').selectedIndex = settings.cmp
 }
 
@@ -159,7 +160,8 @@ function updateLotBarcode(){
     const wo = gebi('wonum').value
     const cc = gebi('cc').value
 
-    gebi('lbWoNum').textContent = wo
+    lbwo = gebi('sslbwonumber')
+    if (lbwo) lbwo.textContent = wo
 
     lotCode = generateMachLot(wo, cc)
     if (input) {
@@ -193,7 +195,7 @@ function generateMachLot(woNum, cc = false){
 }
 
 function updateEmpId(text) {
-    gebi('lbEmpId').textContent = text
+    gebi('sslbemployeeid').textContent = text
 
     if (text.length > 4) {
         showWarningMessage('Employee ID is usually 4 digits long.')
@@ -263,3 +265,4 @@ function updateSetting(setting, value) {
         console.warn(`key ${setting} does not exist in settings.`)
     }
 }
+

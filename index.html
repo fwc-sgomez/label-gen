@@ -8,6 +8,7 @@
         <script src='scripts/main.js'></script>
         <script src='scripts/store.js'></script>
         <script src='scripts/printHistory.js'></script>
+        <script src='scripts/hndLbChange.js'></script>
         <script src='https://cdn.jsdelivr.net/npm/jsbarcode@3.12.1/dist/barcodes/JsBarcode.code128.min.js'></script>
         <link rel='stylesheet' href='styles/main.css'>
         <link rel='stylesheet' href='styles/sidebar.css'>
@@ -17,15 +18,15 @@
         <noscript style="color: red; font-size: 36px;">Javascript is required for this tool to work properly. Please enable Javascript.</noscript>
 
         <div class='headerLogoContainer'>
-            <img class='headerLogo' src="/img/fw.png" alt="">
+            <img class='headerLogo noprint' src="/img/fw.png" alt="">
         </div>
 
         <div class='header noprint'>
             
             <div class='headerItem'>
                 <label for="labelType">Label type:</label>
-                <select name="labelType" id="labelType" onchange='updateSetting("lbType", this.selectedIndex)'>
-                    <option value="machwip" selected>Machining Wip</option>
+                <select name="labelType" id="labelType" onchange='lbTypeChange(this.selectedIndex)'>
+                    <option value="machwip" selected>Machining WIP</option>
                     <option value="invltdshelf">Inv Limited Shelf</option>
                     <option value="invwipfg">Inv WIP to FG</option>
                     <option value="invrec">Inv Recieve to Inv</option>
@@ -71,21 +72,7 @@
                         <hr>
                     </div>
     
-                    <div class='section flex'>
-                        <div id='ss1' class='subsection ssTri vr'>
-                            <p class='note'>WO Number</p>
-                            <p id='lbWoNum'></p>
-                        </div>
-    
-                        <div id='ss2' class='subsection ssTri vr'>
-                            <p class='note'>Employee ID</p>
-                            <p id='lbEmpId' class='larger'></p>
-                        </div>
-    
-                        <div id='ss3' class='subsection ssTri'>
-                            <p class='note'>Quantity</p>
-                            <p id='lbQty' class='larger'></p>
-                        </div>
+                    <div id='subsections' class='section flex'>
                     </div>
                 </div>
             </div>
@@ -115,7 +102,7 @@
                 <input type="text" name="emp" id="emp" placeholder='0000' oninput='updateEmpId(this.value)'>
                 <br>
                 <label for="qty">Quantity:</label>
-                <input type="text" name="qty" id="qty" placeholder='00' oninput='document.getElementById("lbQty").textContent = this.value'>
+                <input type="text" name="qty" id="qty" placeholder='00' oninput='document.getElementById("sslbquantity").textContent = this.value'>
                 <br>
                 <label for="cc">CC:</label>
                 <input type="text" name="cc" id="cc" placeholder='00' oninput='updateLotBarcode()'>

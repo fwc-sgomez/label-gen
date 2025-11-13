@@ -2,7 +2,6 @@ function saveToPrintHistory() {
     const prints = lsReadJson('prints')
     const settings = lsReadJson('settings')
     
-
     const data = {
         lbType: settings.lbType,
         id: prints.length,
@@ -34,7 +33,6 @@ function loadPrintHistory() {
         return;
     }
 
-    
     let idx = 0
     history.forEach(print => {
         const date = new Date(print.date)
@@ -52,7 +50,7 @@ function loadPrintHistory() {
         let sec3 = document.createElement('div')
         sec3.className = 'phSec'
 
-        sec1.append(hsCreatePEl('PN: '+print.part+print.rev, true))
+        sec1.append(hsCreatePEl(`PN: ${print.part}-${print.rev}`, true))
         sec1.append(hsCreatePEl('Lot: '+print.lot))
         div_label.append(sec1)
 
@@ -87,17 +85,21 @@ function clearPrintHistory() {
 function reloadPrint(id) {
     const prints = lsReadJson('prints')
     const print = prints[id]
+
+    gebi('labelType').selectedIndex = print.lbType
+    lbTypeChange(print.lbType)
     
     gebi('part').value = print.part
     gebi('rev').value = print.rev
     gebi('lot').value = print.lot
     gebi('wonum').value = print.wo
     gebi('emp').value = print.empId
-    gebi('lbEmpId').textContent = print.empId
+    const lbeid = gebi('sslbemployeeid')
+    if (lbeid) lbeid.textContent = print.empId
     gebi('qty').value = print.qty
-    gebi('lbQty').textContent = print.qty
+    gebi('sslbquantity').textContent = print.qty
     gebi('company').selectedIndex = print.company
-    gebi('labelType').selectedIndex = print.lbType
+    
 
     updatePnBarcode()
     updateLotBarcode()
