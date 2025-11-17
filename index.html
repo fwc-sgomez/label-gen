@@ -18,7 +18,7 @@
         <noscript style="color: red; font-size: 36px;">Javascript is required for this tool to work properly. Please enable Javascript.</noscript>
 
         <div class='headerLogoContainer'>
-            <img class='headerLogo noprint' src="/img/fw.png" alt="">
+            <img class='headerLogo noprint' src="./img/fw.png" alt="">
         </div>
 
         <div class='header noprint'>
@@ -30,10 +30,10 @@
                     <option value="invltdshelf">Inv Limited Shelf</option>
                     <option value="invwipfg">Inv WIP to FG</option>
                     <option value="invrec">Inv Recieve to Inv</option>
-                    <option value="qcpass" disabled>QC Pass</option>
-                    <option value="qcfail" disabled>QC Fail</option>
-                    <option value="qcfai" disabled>QC FAI</option>
-                    <option value="qcinsp" disabled>QC Inspect</option>
+                    <option value="qcpass">QC Pass</option>
+                    <option value="qcfail">QC Fail</option>
+                    <option value="qcfai">QC FAI</option>
+                    <option value="qcinsp">QC Inspect</option>
                 </select>
 
                 
@@ -56,24 +56,27 @@
                     <img id='logo' class='logo' src='./img/fw.png' alt='Fibreworks Composites Logo'>
                 </div>
                 <div class='data'>
+                    <p class='bcNote'>PN</p>
                     <div class='section'>
-                        <p class='bcNote'>PN</p>
                         <div class='barcodeContainer'>
                             <svg class='barcode' id='pn'></svg>
                         </div>
-                        <hr>
                     </div>
+                    <hr class='hrNoTBMargin'>
     
-                    <div class='section'>
-                        <p class='bcNote'>LOT</p>
+                    <p class='bcNote'>LOT</p>
+                    <div class='section flex'>
                         <div class='barcodeContainer'>
                             <svg class='barcode' id='lotBc'></svg>
                         </div>
-                        <hr>
+                        <!-- <div class='subsection ssTri'>
+
+                        </div> -->
                     </div>
+                    <hr class='hrNoTBMargin'>
     
-                    <div id='subsections' class='section flex'>
-                    </div>
+                    <!-- subsections dynamically created -->
+                    <div id='subsections' class='section flex'></div>
                 </div>
             </div>
     
@@ -104,9 +107,22 @@
                 <label for="qty">Quantity:</label>
                 <input type="text" name="qty" id="qty" placeholder='00' oninput='document.getElementById("sslbquantity").textContent = this.value'>
                 <br>
-                <label for="cc">CC:</label>
-                <input type="text" name="cc" id="cc" placeholder='00' oninput='updateLotBarcode()'>
-                <br>
+                <div id='ccdiv'>
+                    <label for="cc">CC:</label>
+                    <input type="text" name="cc" id="cc" placeholder='00' oninput='updateLotBarcode()'>
+                    <br>
+                </div>
+                <div id='ncrdiv'>
+                    <label for="ncr">NCR:</label>
+                    <input type="text" name="ncr" id="ncr" placeholder='0000' oninput='gebi("sslbncr").textContent = this.value'>
+                    <br>
+                </div>
+                <div id='expdiv'>
+                    <label for="exp">Expiry date:</label>
+                    <!-- <input type="exp" name="exp" id="exp" oninput='gebi("sslbncr").textContent = this.value'> -->
+                    <input type="date" name="exp" id="exp" oninput='gebi("sslbexpdate").textContent = reformatDatePicker(this.value)'>
+                    <br>
+                </div>
                 <!-- <input class='noprint' type="button" value='test' onclick='JsBarcode("#pn", "12324FN0002      00 ", {width: 1.25, height: 30, displayValue: true, font: "arial"})'> -->
             </div>
 

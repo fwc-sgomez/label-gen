@@ -59,7 +59,7 @@ body {
 }
 
 .data {
-    margin-left: 7%;
+    margin-left: 8%;
 }
 
 .section {
@@ -68,6 +68,7 @@ body {
 
 .flex {
     display: flex;
+    justify-content: center;
 }
 
 .subsection {
@@ -86,12 +87,27 @@ body {
     width: 100%;
 }
 
+.ss23 {
+    /* for 2/3 split. use sstri for 1/3 split */
+    width: 66.66%;
+}
+
+.boldborder {
+    border: 3px solid #000;
+}
+
 .vr {
     border-right: 2px solid #000;
 }
 
 .larger {
     font-size: 24px;
+    margin: auto;
+    margin-top: 12px;
+}
+
+.largerer {
+    font-size: 32px;
     margin: auto;
     margin-top: 12px;
 }
@@ -104,6 +120,11 @@ hr {
     border-style: solid;
     z-index: 99;
     position: relative;
+}
+
+.hrNoTBMargin {
+    margin-top: -2px;
+    margin-bottom: 0;
 }
 
 .noHrMargin {

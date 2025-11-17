@@ -159,6 +159,9 @@ function updateLotBarcode(){
     const input = gebi('lot').value
     const wo = gebi('wonum').value
     const cc = gebi('cc').value
+    const lbType = gebi('labelType').selectedIndex
+    let width = 2 // full width
+    if ((lbType > 4) && (lbType < 8)) width = 1.25 // range, labels 5 thru 7 req midsection to be shorter
 
     lbwo = gebi('sslbwonumber')
     if (lbwo) lbwo.textContent = wo
@@ -179,7 +182,7 @@ function updateLotBarcode(){
         showWarningMessage('Lot code is longer than 15 characters! This may not be accepted in GSS.')
     }
 
-    generateBarcode('#lotBc', lotCode, 2)
+    generateBarcode('#lotBc', lotCode, width)
 }
 
 function generateMachLot(woNum, cc = false){

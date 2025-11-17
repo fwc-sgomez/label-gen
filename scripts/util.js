@@ -37,7 +37,6 @@ let lastWmTime;
  * @returns void
  */
 function showWarningMessage(message, duration = 5, color = 'red') {
-
     const timeDelta = ((Date.now() - lastWmTime) / 1000)
     console.warn(message, Date.now().toString()) // log the message just in case
     if ((lastWarningMessage == message) && timeDelta < 3) return;
@@ -87,3 +86,12 @@ function generateDate(formatOverride = '', date = 0){
     return fmt
 }
 
+function reformatDatePicker(date){
+    // original: YYYY-MM-DD
+    const split = date.split('-')
+    const reformat = []
+    reformat.push(split [1])
+    reformat.push(split [2])
+    reformat.push(split[0])
+    return reformat.join('-')
+}

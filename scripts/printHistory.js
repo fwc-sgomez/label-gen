@@ -13,7 +13,10 @@ function saveToPrintHistory() {
         qty: gebi('qty').value,
         lot: lotCode, // lot code is generated in updateLotBarcode() and itn't accessible elsewhere so i made lotCode global instead...
         fullPart: fullPn, // same thing as lot- made global
-        date: Date.now()
+        date: Date.now(),
+        ncr: gebi('ncr').value,
+        cc: gebi('cc').value,
+        exp: gebi('exp').valueAsNumber || 0
     }
     console.log(data)
 

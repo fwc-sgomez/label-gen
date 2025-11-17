@@ -79,4 +79,5 @@ function consoleDbg(data) {
 function dbgForceInit() {
     updateSetting('init', false)
     init()
+    window.location.reload()
 }
