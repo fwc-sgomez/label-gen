@@ -161,7 +161,7 @@ function updateLotBarcode(){
     const cc = gebi('cc').value
     const lbType = gebi('labelType').selectedIndex
     let width = 2 // full width
-    if ((lbType > 4) && (lbType < 8)) width = 1.25 // range, labels 5 thru 7 req midsection to be shorter
+    if ((lbType > 7) && (lbType < 11)) width = 1.25 // range, labels 5 thru 7 req midsection to be shorter
 
     lbwo = gebi('sslbwonumber')
     if (lbwo) lbwo.textContent = wo
@@ -233,7 +233,7 @@ function handlePrint() {
         return;
     }
     if (rev.includes('?')) {
-        addWarningMessage('Cannot print: rev number is unknown. Use Ctrl+P to bypass.')
+        showWarningMessage('Cannot print: rev number is unknown. Use Ctrl+P to bypass.')
         return;
     } else if (!rev) {
         if (!confirm('Rev number is empty. Print regardless?')) return;

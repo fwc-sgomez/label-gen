@@ -1,64 +1,93 @@
 function lbTypeChange(idx) {
     updateSetting("lbType", idx)
     clearSubsections()
+    cleanMidsection()
     const ccdiv = gebi('ccdiv')
     const ncrdiv = gebi('ncrdiv')
     const expdiv = gebi('expdiv')
+    const empdiv = gebi('empdiv')
     ccdiv.hidden = false
     ncrdiv.hidden = true
     expdiv.hidden = true
+    empdiv.hidden = true
     switch (idx) {
-        case 0: // machWip
+        case 1: // machWip
             createSubsections(['WO Number', 'Employee ID', 'Quantity'])
             ccdiv.hidden = true
+            empdiv.hidden = false
             break;
-        case 1: // invLtdShelf
+        case 3: // invLtdShelf
             createSubsections(['Exp Date', 'Quantity'])
             expdiv.hidden = false
             break;
-        case 2: // invWipFg
+        case 4: // invWipFg
             createSubsections(['Employee ID', 'Quantity'])
+            empdiv.hidden = false
             break;
-        case 3: // invRec
+        case 5: // invRec
             createSubsections(['Quantity'])
             break;
-        case 4: // qcpass
+        case 7: // qcpass
             qcSubsections('pass')
             break;
-        case 5: // qcfail
+        case 8: // qcfail
             qcSubsections('fail')
             ncrdiv.hidden = false
             break;
-        case 6: // qcfai
+        case 9: // qcfai
             qcSubsections('fai')
             break;
-        case 7: // qc insp
+        case 10: // qc insp
             qcSubsections('qci')
             break;
         default:
-            showWarningMessage('invalid selection!')
+            showWarningMessage('invalid label type selection!')
     }
 }
 
-function qcSubsections(pf) {
+function cleanMidsection() {
+    const ms = gebi('midsection')
+
+    // all divs *should* be appended, so child 0 should always be the original div
+    for (let i = 0; i < ms.children.length; i++) { // HTMLCollection does not support forEach 
+        if (i != 0){
+            ms.children[i].remove()
+        } else if (i == 0) {
+            ms.children[i].className = 'barcodeContainer'
+        }
+    }
+}
+
+function qcSubsections(type) {
     const parent = gebi('subsections')
     updateLotBarcode()
-    if (pf == 'pass') {
+    if (type == 'pass') {
         // pass
         parent.append(createLargeQcText('*QC PASS*', 'ss23', true))
 
         parent.append(createStdSubsection('ssTri', 'Quantity', false, true))
 
-    } else if (pf == 'fail') {
+    } else if (type == 'fail') {
         // fail
+        const ms = document.getElementById('midsection')
+        ms.children[0].className += ' ss23 vr'
+        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+        
         parent.append(createLargeQcText('*QC FAIL*', 'ss23', true))
-
         parent.append(createStdSubsection('ssTri', 'NCR #', false, true))
-    } else if (pf == 'fai') {
+    } else if (type == 'fai') {
+        const ms = document.getElementById('midsection')
+        ms.children[0].className += ' ss23 vr'
+        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+
         parent.append(createLargeQcText('********FAI********', 'ssMono', false))
 
         // parent.append(createStdSubsection('ssTri', 'NCR #', false, true))
-    } else if (pf == 'qci') {
+    } else if (type == 'qci') {
+        const ms = document.getElementById('midsection')
+        ms.children[0].className += ' ss23 vr'
+        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+
         parent.append(createLargeQcText('QC INSPECTION', 'ssMono', false))
     }
 

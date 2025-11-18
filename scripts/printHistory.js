@@ -102,7 +102,14 @@ function reloadPrint(id) {
     gebi('qty').value = print.qty
     gebi('sslbquantity').textContent = print.qty
     gebi('company').selectedIndex = print.company
-    
+    gebi('ncr').value = print.ncr
+    const lbncr = gebi('sslbncr')
+    if (lbncr) lbncr.textContent = print.ncr
+    gebi('cc').value = print.cc
+    const expDate = new Date(print.exp).toISOString().split('T')[0]
+    gebi('exp').value = expDate
+    const lbexp = gebi('sslbexpdate')
+    if (lbexp) lbexp.textContent = reformatDatePicker(expDate)
 
     updatePnBarcode()
     updateLotBarcode()

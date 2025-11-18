@@ -95,3 +95,4 @@ function reformatDatePicker(date){
     reformat.push(split[0])
     return reformat.join('-')
 }
+

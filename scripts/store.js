@@ -4,7 +4,7 @@ const debug = false
 
 const defaultSettings = {
     init: true,
-    lbType: 0,
+    lbType: 1,
     ver: ver,
     cmp: 0
 }
