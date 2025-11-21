@@ -256,6 +256,7 @@ function printDataValidation() {
     if (!qty) {
         return (confirm('No qty is entered. Print regardless?'))
     }
+    return true;
 }
 
 let imgData;
