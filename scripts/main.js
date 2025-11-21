@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => { // hmm
     // setup stuff
     setFromSettings() // prepares defaults
 
-    //
     checkUrlParams() // then check url params so the rest can be updated accordingly
 
     updatePnBarcode()
