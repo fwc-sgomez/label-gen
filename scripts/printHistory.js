@@ -45,7 +45,6 @@ function loadPrintHistory() {
             reloadPrint(print.id)
         })
         
-
         let sec1 = document.createElement('div')
         sec1.className = 'phSec'
         let sec2 = document.createElement('div')
@@ -71,7 +70,6 @@ function loadPrintHistory() {
         parent.prepend(div_label) // prepend so that newest is on top
         idx++
     })
-    
 }
 
 function hsCreatePEl(text, vr = false) {
@@ -96,16 +94,21 @@ function reloadPrint(id) {
     gebi('rev').value = print.rev
     gebi('lot').value = print.lot
     gebi('wonum').value = print.wo
+    gebi('cc').value = print.cc
+    gebi('company').selectedIndex = print.company
+    
+    gebi('qty').value = print.qty
+    const lbqty = gebi('sslbquantity')
+    if (lbqty) lbqty.textContent = print.qty
+    
     gebi('emp').value = print.empId
     const lbeid = gebi('sslbemployeeid')
     if (lbeid) lbeid.textContent = print.empId
-    gebi('qty').value = print.qty
-    gebi('sslbquantity').textContent = print.qty
-    gebi('company').selectedIndex = print.company
+
     gebi('ncr').value = print.ncr
     const lbncr = gebi('sslbncr')
     if (lbncr) lbncr.textContent = print.ncr
-    gebi('cc').value = print.cc
+
     const expDate = new Date(print.exp).toISOString().split('T')[0]
     gebi('exp').value = expDate
     const lbexp = gebi('sslbexpdate')

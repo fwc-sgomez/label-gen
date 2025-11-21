@@ -65,7 +65,6 @@ function lsReadJson(key) {
     } else {
         return JSON.parse(data)
     }
-        
 }
 
 

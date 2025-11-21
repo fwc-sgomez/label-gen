@@ -90,7 +90,6 @@ function qcSubsections(type) {
 
         parent.append(createLargeQcText('QC INSPECTION', 'ssMono', false))
     }
-
 }
 
 /**
