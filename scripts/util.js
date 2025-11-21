@@ -13,10 +13,6 @@ function detectBrowser() {
     //});
 }
 
-function firstTime(){
-    
-}
-
 /**
  * shorthand lazy for document.getElementById
  * @param {string} elementId id of element
@@ -46,6 +42,7 @@ function showWarningMessage(message, duration = 5, color = 'red') {
     const warningDiv = document.createElement('div')
     warningDiv.className = 'warning'
     warningDiv.style.backgroundColor = color
+    warningDiv.style.color = color == 'yellow' ? '#000' : '#FFF'
 
     const warnMsg = document.createElement('p')
     warnMsg.className = 'warningMessage'
