@@ -253,7 +253,6 @@ window.addEventListener("afterprint", (event) => {
     console.log(event)
     saveToPrintHistory()
     loadPrintHistory()
-    
 });
 
 function updateSetting(setting, value) {
