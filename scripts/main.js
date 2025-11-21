@@ -193,7 +193,6 @@ function generateMachLot(woNum, cc = false){
         date = generateDate('MMDDYY')
     }
     return cleanWo+date+cc
-
 }
 
 function updateEmpId(text) {
