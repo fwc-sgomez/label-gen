@@ -193,7 +193,6 @@ function generateMachLot(woNum, cc = false){
         date = generateDate('MMDDYY')
     }
     return cleanWo+date+cc
-
 }
 
 function updateEmpId(text) {
@@ -215,40 +214,56 @@ function generateBarcode(element, text, cWidth){
     })
 }
 
-function handlePrint() {
-     
+async function handlePrint() {
+    if (printDataValidation()){
+        await convertToPng()
+        // print()
+        console.log('opening with data:')
+        console.log(imgData)
+        open(`fwcpa://print?img=${imgData}`)
+        showWarningMessage('if nothing happened, make sure to install FwcPrintApp', 3, 'yellow')
+    }
+}
+
+// needs bugfix: confirming one confirm() doesn't allow for verification completion
+function printDataValidation() {
     const pn = gebi('part').value
     const rev = gebi('rev').value
     const wo = gebi('wonum').value
     const empId = gebi('emp').value
     const qty = gebi('qty').value
 
-
     if (!pn || (pn == '00000XX0000')) {
         // confirm('no part number, or ')
         showWarningMessage('Cannot print: part number is empty or is template part number. Use Ctrl+P to bypass.')
-        return;
+        return false;
     } else if (pn.length > 17) {
         showWarningMessage('Cannot print: part number is too long and barcode has not been updated. Use Ctrl+P to bypass.')
-        return;
+        return false;
     }
     if (rev.includes('?')) {
         showWarningMessage('Cannot print: rev number is unknown. Use Ctrl+P to bypass.')
-        return;
+        return false;
     } else if (!rev) {
-        if (!confirm('Rev number is empty. Print regardless?')) return;
+        return (confirm('Rev number is empty. Print regardless?'));
     }
     if (!wo) {
-        if (!confirm('No work order number is entered. Print regardless?')) return;
+        return (confirm('No work order number is entered. Print regardless?'))
     }
     if (!empId) {
-        if (!confirm('No employee ID is entered. Print regardless?')) return;
+        return (confirm('No employee ID is entered. Print regardless?'))
     }
     if (!qty) {
-        if (!confirm('No qty is entered. Print regardless?')) return;
+        return (confirm('No qty is entered. Print regardless?'))
     }
+}
 
-    attemptPrint()
+let imgData;
+async function convertToPng() {
+    const label = gebi('label')
+    await html2canvas(label).then((canvas) => {
+        imgData = canvas.toDataURL()
+    });
 }
 
 function attemptPrint(){
@@ -264,7 +279,6 @@ window.addEventListener("afterprint", (event) => {
     console.log(event)
     saveToPrintHistory()
     loadPrintHistory()
-    
 });
 
 function updateSetting(setting, value) {
