@@ -23,8 +23,8 @@
     <body>
         <noscript style="color: red; font-size: 36px;">Javascript is required for this tool to work properly. Please enable Javascript.</noscript>
 
-        <div class='headerLogoContainer'>
-            <img class='headerLogo noprint' src="./img/fw.png" alt="">
+        <div class='headerLogoContainer noprint'>
+            <img class='headerLogo' src="./img/fw.png" alt="">
         </div>
 
         <div class='header noprint'>
@@ -44,7 +44,13 @@
                     <option value="qcfai">QC FAI</option>
                     <option value="qcinsp">QC Inspect</option>
                 </select>
-
+            </div>
+            <div class='headerItem'>
+                <label for="printType">Print using:</label>
+                <select name="printType" id="printType" onchange='setPrintType(this.selectedIndex)'>
+                    <option value="printapp" selected>FWCPrintApp</option>
+                    <option value="chrome">Built-in</option>
+                </select>
             </div>
         </div>
 
@@ -134,7 +140,8 @@
                         <input type="date" name="exp" id="exp" oninput='gebi("sslbexpdate").textContent = reformatDatePicker(this.value)'>
                         <br>
                     </div>
-                </form>            </div>
+                </form>
+            </div>
 
             <div class='noprint'>
                 <button class='print' onclick='handlePrint()'>

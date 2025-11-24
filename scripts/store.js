@@ -6,7 +6,8 @@ const defaultSettings = {
     init: true,
     lbType: 1,
     ver: ver,
-    cmp: 0
+    cmp: 0,
+    printType: 0
 }
 
 function init() {

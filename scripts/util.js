@@ -46,7 +46,7 @@ function showWarningMessage(message, duration = 5, color = 'red') {
 
     const warnMsg = document.createElement('p')
     warnMsg.className = 'warningMessage'
-    warnMsg.textContent = message
+    warnMsg.innerHTML = message
 
     warningDiv.append(warnMsg)
     if (duration > 0){
@@ -93,3 +93,18 @@ function reformatDatePicker(date){
     return reformat.join('-')
 }
 
+/**
+ * change a setting stored
+ * @param {string} setting 
+ * @param {string | number} value 
+ */
+function updateSetting(setting, value) {
+    const settings = lsReadJson('settings')
+    if (settings.hasOwnProperty(setting)) {
+        settings[setting] = value
+
+        lsStore('settings', settings)
+    } else {
+        console.warn(`key ${setting} does not exist in settings.`)
+    }
+}

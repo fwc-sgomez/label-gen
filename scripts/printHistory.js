@@ -19,8 +19,15 @@ function saveToPrintHistory() {
         exp: gebi('exp').valueAsNumber || 0
     }
     console.log(data)
-
     prints.push(data)
+
+    while(prints.length > 50){
+        prints.shift()
+        console.log('prints > 50, shifted')
+        for (let i = 0; i < prints.length; i++) { // renumber ids accordingly...
+            prints[i].id = i
+        }
+    }
     lsStore('prints', prints)
 }
 
