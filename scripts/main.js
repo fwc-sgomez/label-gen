@@ -262,14 +262,11 @@ function printDataValidation() {
 
     
     if (!validatePn(pn)) return;
+    if (!validateWoNum(wo)) return;
 
     let confirmed = false;
 
-    if (!pn || (pn == '00000XX0000')) {
-        // confirm('no part number, or ')
-        showWarningMessage('Cannot print: part number is empty or is template part number. Use Ctrl+P to bypass.')
-        return false;
-    } else if (pn.length > 17) {
+    if (pn.length > 17) {
         showWarningMessage('Cannot print: part number is too long and barcode has not been updated. Use Ctrl+P to bypass.')
         return false;
     }
@@ -278,10 +275,6 @@ function printDataValidation() {
         return false;
     } else if (!rev) {
         confirmed = (confirm('Rev number is empty. Print regardless?'));
-        if (!confirmed) return false;
-    }
-    if (!wo) {
-        confirmed = (confirm('No work order number is entered. Print regardless?'))
         if (!confirmed) return false;
     }
     if (!empId) {
@@ -330,6 +323,26 @@ function validatePn(pn) {
     }
     showWarningMessage('<p onclick="oneTimeSkipPnValid=true; handlePrint()">Click this message to skip part number validation and try again.</p>', 10, 'orange')
     return false;
+}
+
+let oneTimeSkipWoValid
+function validateWoNum(wo) {
+    if (!wo) {
+        return confirm('No WO number is entered. Print regardless?')
+    }
+    if (oneTimeSkipWoValid){
+        oneTimeSkipWoValid = false
+        return true;
+    }
+    const reg = new RegExp(/[0-9]{6}-[0-9]{3}/gm)
+    if (reg.test(wo)){
+        return true
+    } else {
+        showWarningMessage('Work order number failed validation check. Make sure it\'s in the correct format.')
+    }
+
+    showWarningMessage('<p onclick="oneTimeSkipWoValid=true; handlePrint()">Click this message to skip part number validation and try again.</p>', 10, 'orange')
+    return false
 }
 
 let imgData;
