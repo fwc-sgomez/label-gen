@@ -29,6 +29,7 @@ function setFromSettings() {
     lbTypeChange(settings.lbType)
     gebi('company').selectedIndex = settings.cmp
     gebi('printType').selectedIndex = settings.printType
+    setPrintType(settings.printType)
 }
 
 function checkUrlParams(){
@@ -245,6 +246,8 @@ async function printUsingApp() {
         console.warn('data length > 30k !!')
     }
     open(`fwcpa://print?img=${imgData}`)
+    saveToPrintHistory()
+    loadPrintHistory()
     showWarningMessage('If nothing happened, change "Print using" to "Built-in"', 5, 'yellow')
 }
 
@@ -259,6 +262,7 @@ function printDataValidation() {
     const wo = gebi('wonum').value
     const empId = gebi('emp').value
     const qty = gebi('qty').value
+
 
     
     if (!validatePn(pn)) return;
@@ -358,16 +362,26 @@ function dummyPrint(){
 }
 
 window.addEventListener("afterprint", (event) => {
-    console.log(event)
+    // console.log(event)
     saveToPrintHistory()
     loadPrintHistory()
 });
 
 function setPrintType(idx) {
     updateSetting('printType', idx)
-    if (idx == 1){
+    const hide = getSetting('neverShowPaperTypeMsg')
+    const p = gebi('printBtnText')
+
+    if ((idx == 1) && (!hide)){
         // set to built-in printing. show a message about setting printer.
-        showWarningMessage('When using built-in printing, make sure to add the DYMO printer as a printer within the printing settings.', 30, 'yellow')
+        showWarningMessage('When using built-in printing, make sure to add and set the DYMO printer as a printer within the printing settings.', 30, 'yellow')
         showWarningMessage('Set paper size to "99014 Shipping" for 2 1/8" x 4" labels.', 30, 'yellow')
+        showWarningMessage('<p onclick=\'neverShowPaperTypeMsg()\'>Click this message to never show these reminders again.</p>', 30, 'yellow')
     }
+    p.textContent = (idx == 0 ? 'Print with FWCPrintApp' : 'Print')
+}
+
+function neverShowPaperTypeMsg() {
+    updateSetting('neverShowPaperTypeMsg', true)
+    showWarningMessage('Saved preference for next time.', )
 }

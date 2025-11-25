@@ -105,6 +105,15 @@ function updateSetting(setting, value) {
 
         lsStore('settings', settings)
     } else {
-        console.warn(`key ${setting} does not exist in settings.`)
+        console.warn(`could not update: key ${setting} does not exist in settings.`)
+    }
+}
+
+function getSetting(setting) {
+    const settings = lsReadJson('settings')
+    if (settings.hasOwnProperty(setting)) {
+        return settings[setting]
+    } else {
+        console.warn(`could not get: key ${setting} does not exist in settings.`)
     }
 }

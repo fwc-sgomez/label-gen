@@ -7,7 +7,8 @@ const defaultSettings = {
     lbType: 1,
     ver: ver,
     cmp: 0,
-    printType: 0
+    printType: 0,
+    neverShowPaperTypeMsg: false
 }
 
 function init() {
@@ -67,8 +68,6 @@ function lsReadJson(key) {
         return JSON.parse(data)
     }
 }
-
-
 
 function consoleDbg(data) {
     if (debug){
