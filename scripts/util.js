@@ -1,0 +1,119 @@
+function detectBrowser() {
+    const uaData = navigator.userAgentData;
+    const b = uaData.brands.find(brand => brand.brand == 'Microsoft Edge')
+    if (b) {
+        showWarningMessage('For Edge browser only: When printing, set "Layout" to "Portrait"', 20, )
+    } 
+    //uaData.brands.forEach(brand => {
+    //    if (brand.brand == 'Microsoft Edge') {
+    //        showWarningMessage('For Edge browser only: When printing, set "Layout" to "Portrait"', 20)
+    //    } else if (brand.brand != "Chromium") {
+    //        showWarningMessage('Please consider switching to Chrome as this app may not print correctly with other browsers.')
+    //    }
+    //});
+}
+
+/**
+ * shorthand lazy for document.getElementById
+ * @param {string} elementId id of element
+ * @returns HTMLElement
+ */
+function gebi(elementId) {
+    return document.getElementById(elementId)
+}
+
+
+let lastWarningMessage = ''
+let lastWmTime;
+/**
+ * show a warning/alert message to the user.
+ * @param {string} message text to display in the warning message
+ * @param {number} duration duration in seconds to show message. default is 5s
+ * @param {string} color background color of message box. default is 'red'
+ * @returns void
+ */
+function showWarningMessage(message, duration = 5, color = 'red') {
+    const timeDelta = ((Date.now() - lastWmTime) / 1000)
+    console.warn(message, Date.now().toString()) // log the message just in case
+    if ((lastWarningMessage == message) && timeDelta < 3) return;
+    lastWarningMessage = message
+    lastWmTime = Date.now()
+    const parent = gebi('warnings')
+    const warningDiv = document.createElement('div')
+    warningDiv.className = 'warning'
+    warningDiv.style.backgroundColor = color
+    warningDiv.style.color = color == 'yellow' ? '#000' : '#FFF'
+
+    const warnMsg = document.createElement('p')
+    warnMsg.className = 'warningMessage'
+    warnMsg.innerHTML = message
+
+    warningDiv.append(warnMsg)
+    if (duration > 0){
+        setTimeout(() => {
+            warningDiv.remove()
+        }, (duration * 1000));
+    }
+
+    parent.append(warningDiv)
+}
+
+/**
+ * returns current date as MMDDYYYY by default.
+ * @param { string } formatOverride
+ * accepts MM, DD, and/or YYYY | YY only. default is MMDDYYYY but can be something like MM-DD-YYYY
+ * @param { Date | number | string | undefined } date 
+ */
+function generateDate(formatOverride = '', date = 0){
+    const d = new Date(date ? date : Date.now())
+    let fmt = formatOverride.toUpperCase() || 'MMDDYYYY'
+    let day = d.getDate().toString() 
+    let month = (d.getMonth() + 1).toString()
+    let year = d.getFullYear().toString()
+    let yearShort = year.slice(2, 4)
+
+    if (day.length < 2) {day = ('0' + day)}
+    if (month.length < 2) {month = ('0' + month)}
+
+    fmt = fmt.replaceAll('DD', day)
+    fmt = fmt.replaceAll('MM', month)
+    fmt = fmt.replaceAll('YYYY', year)
+    fmt = fmt.replaceAll('YY', yearShort)
+
+    return fmt
+}
+
+function reformatDatePicker(date){
+    // original: YYYY-MM-DD
+    const split = date.split('-')
+    const reformat = []
+    reformat.push(split [1])
+    reformat.push(split [2])
+    reformat.push(split[0])
+    return reformat.join('-')
+}
+
+/**
+ * change a setting stored
+ * @param {string} setting 
+ * @param {string | number} value 
+ */
+function updateSetting(setting, value) {
+    const settings = lsReadJson('settings')
+    if (settings.hasOwnProperty(setting)) {
+        settings[setting] = value
+
+        lsStore('settings', settings)
+    } else {
+        console.warn(`could not update: key ${setting} does not exist in settings.`)
+    }
+}
+
+function getSetting(setting) {
+    const settings = lsReadJson('settings')
+    if (settings.hasOwnProperty(setting)) {
+        return settings[setting]
+    } else {
+        console.warn(`could not get: key ${setting} does not exist in settings.`)
+    }
+}

@@ -1,0 +1,212 @@
+body {
+    text-align: center;
+    background-color: #252525;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    display: grid;
+}
+
+.gsans {
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 100,
+    "GRAD" 0,
+    "ROND" 100;
+}
+
+.mainContent {
+    margin-left: 300px;
+}
+
+#label {
+    width: 4in;
+    height: 2.125in;
+    margin: auto;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.logo {
+    filter: grayscale(100%);
+    transform: rotate(270deg);
+    position: absolute;
+    margin-left: -260px;
+    margin-top: 84px; /* that looks centered...? */
+    max-width: 2in;
+}
+
+#dataInput {
+    width: 6in;
+    height: auto;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 15px;
+    padding-bottom: 15px;
+}
+
+.barcode {
+    position: relative;
+    max-width: 330px;
+}
+
+.bcNote {
+    position: absolute;
+    margin-top: 42px;
+    margin-left: 25px;
+    z-index: 99;
+}
+
+.note {
+    margin: 0;
+    margin-top: 2px;
+}
+
+.data {
+    margin-left: 8%;
+}
+
+.section {
+    height: 0.7083in;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+}
+
+.subsection {
+    height: 100%;
+}
+
+.ssTri {
+    width: 33.33%;
+}
+
+.ssBi {
+    width: 50%;
+}
+
+.ssMono {
+    width: 100%;
+}
+
+.ss23 {
+    /* for 2/3 split. use sstri for 1/3 split */
+    width: 66.66%;
+}
+
+.boldborder {
+    border: 3px solid #000;
+}
+
+.vr {
+    border-right: 2px solid #000;
+}
+
+.larger {
+    font-size: 24px;
+    margin: auto;
+    margin-top: 12px;
+}
+
+.largerer {
+    font-size: 32px;
+    margin: auto;
+    margin-top: 12px;
+}
+
+hr {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    border-color: #000;
+    border-style: solid;
+    /* z-index: 99; */
+    position: relative;
+}
+
+.hrNoTBMargin {
+    margin-top: -2px;
+    margin-bottom: 0;
+}
+
+.noHrMargin {
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.warnings {
+    width: 30%;
+    float: right;
+    position: fixed;
+    right: 0;
+    z-index: 99;
+    /* background-color: aquamarine; */
+}
+
+.warning {
+    /* background-color: red; */
+    height: auto;
+    min-height: 30px;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.warningMessage {
+    margin: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /* color: #FFF; */
+}
+
+.print {
+    margin-top: 15px;
+    width: 100px;
+    height: auto;
+}
+
+.printSvg {
+    width: 50px;
+}
+
+.hide {
+    display: none;
+}
+
+@media print {
+    @page {
+        size: 54mm 101mm;
+        size: landscape;
+        margin: 0px;
+    }
+    body {
+        height: 2.125in !important;
+        width: 4in !important;
+        margin: 0 !important;
+        padding: 0;
+        /* display: none !important; */
+    }
+    #label {
+        margin: 0px !important;
+        padding: 0;
+        display: block !important;
+    }
+    .noprint {
+        display: none !important;
+    }
+    .mainContent {
+        margin: 0;
+    }
+}
+
