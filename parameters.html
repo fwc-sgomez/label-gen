@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>FWC Label Generator | Parameters</title>
+        <link rel='stylesheet' href='styles/md.css'>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
+    </head>
+    <body class='gsans'>
+        <div id="content"></div>
+        <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+        <script>
+            // using an md parser was just easier in terms of flexibility...
+
+            // load md file then let marked parse it
+            fetch('./parameters.md').then(res => {
+                res.text().then(text => {
+                    document.getElementById('content').innerHTML = marked.parse(text);
+                })
+            })
+        </script>
+    </body>
+</html>

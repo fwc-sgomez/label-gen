@@ -1,0 +1,46 @@
+body {
+    /* text-align: center; */
+    background-color: #252525;
+    margin: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFF;
+    font-size: 13px;
+    font-weight: bold;
+    display: grid;
+}
+
+.gsans {
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 100,
+    "GRAD" 0,
+    "ROND" 100;
+}
+
+pre {
+    border: 1px solid #FFF;
+    background-color: #151515;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+code {
+    background-color: #151515;
+    padding: 5px;
+    border-radius: 5px;
+    padding-top: 2px;
+    line-height: 1.5em;
+}
+
+h2 {
+    border-bottom: 2px solid #FFF;
+    margin-block-start: 0;
+}
+
+pre code {
+    padding: 0
+}

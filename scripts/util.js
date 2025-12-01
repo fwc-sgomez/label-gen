@@ -4,13 +4,6 @@ function detectBrowser() {
     if (b) {
         showWarningMessage('For Edge browser only: When printing, set "Layout" to "Portrait"', 20, )
     } 
-    //uaData.brands.forEach(brand => {
-    //    if (brand.brand == 'Microsoft Edge') {
-    //        showWarningMessage('For Edge browser only: When printing, set "Layout" to "Portrait"', 20)
-    //    } else if (brand.brand != "Chromium") {
-    //        showWarningMessage('Please consider switching to Chrome as this app may not print correctly with other browsers.')
-    //    }
-    //});
 }
 
 /**

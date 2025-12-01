@@ -353,7 +353,7 @@ let imgData;
 async function convertToPng() {
     const label = gebi('label')
     await html2canvas(label).then((canvas) => {
-        imgData = canvas.toDataURL('image/jpeg', 0.7)
+        imgData = canvas.toDataURL()
     });
 }
 
