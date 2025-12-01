@@ -23,7 +23,7 @@ lbt codes
 0: Machining WIP
 1: Inventory, Limited shelf
 2: Inventory, WIP to FG
-3: Inventory, Revieve to inventory
+3: Inventory, Recieve to inventory
 4: QC, Pass
 5: QC, Fail
 6: QC, FAI
@@ -42,3 +42,7 @@ Examples
 ```
 https://fwc-sgomez.github.io/label-gen/?p=08025FN0001-00&w=012345-000&lbt=0
 ```
+
+Revision history
+-------------------
+* Revision history can be viewed on [GitHub](https://github.com/fwc-sgomez/label-gen/commits/main/parameters.md).
