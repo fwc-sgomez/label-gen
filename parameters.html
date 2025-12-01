@@ -16,13 +16,11 @@
             // using an md parser was just easier in terms of flexibility...
 
             // load md file then let marked parse it
-            fetch('./parameters.md')
-                .then(res => {
-                    res.text()
-                        .then(text => {
-                            document.getElementById('content').innerHTML = marked.parse(text);
-                        })
+            fetch('./parameters.md').then(res => {
+                res.text().then(text => {
+                    document.getElementById('content').innerHTML = marked.parse(text);
                 })
+            })
         </script>
     </body>
 </html>
