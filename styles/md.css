@@ -29,10 +29,18 @@ pre {
 }
 
 code {
-    background-color: black;
+    background-color: #151515;
+    padding: 5px;
+    border-radius: 5px;
+    padding-top: 2px;
+    line-height: 1.5em;
 }
 
 h2 {
     border-bottom: 2px solid #FFF;
     margin-block-start: 0;
+}
+
+pre code {
+    padding: 0
 }

@@ -1,7 +1,7 @@
 Purpose
 -------------------
 
-* The web app supports URL parameters to allow auto-populating part number, rev number, and, order number, and selecting which label to use. Excel integrations are simple and other platforms that can generate URLs with appropriate data is supported.
+* The web app supports URL parameters to allow auto-populating part number, rev number, and, order number, and selecting which label to use. Excel integrations are simple, and other platforms that can generate URLs with the appropriate data is supported.
 * For any issues, questions, or feature requests, please reach out.
 
 Supported parameters
@@ -12,9 +12,8 @@ Supported parameters
 p=<string, part number>
 w=<string, work order>
 cmp=<string, “cf” | “fwc”>
-lbt=<number, 0-7>
+lbt=<number, 0-7> (see section below)
 ```
-
 
 lbt codes
 -------------------
