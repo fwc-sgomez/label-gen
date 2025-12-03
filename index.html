@@ -43,6 +43,8 @@
                     <option value="qcfail">QC Fail</option>
                     <option value="qcfai">QC FAI</option>
                     <option value="qcinsp">QC Inspect</option>
+                    <option disabled>-- S&R --</option>
+                    <option value="srstd">S&R Standard</option>
                 </select>
             </div>
             <div class='headerItem'>
@@ -121,9 +123,11 @@
                         <br>
 
                     </div>
-                    <label for="qty">Quantity:</label>
-                    <input type="text" name="qty" id="qty" placeholder='00' oninput='document.getElementById("sslbquantity").textContent = this.value'>
-                    <br>
+                    <div id='qtydiv'>
+                        <label for="qty">Quantity:</label>
+                        <input type="text" name="qty" id="qty" placeholder='00' oninput='document.getElementById("sslbquantity").textContent = this.value'>
+                        <br>
+                    </div>
                     <div id='ccdiv'>
                         <label for="cc">CC:</label>
                         <input type="text" name="cc" id="cc" placeholder='00' oninput='updateLotBarcode()'>
