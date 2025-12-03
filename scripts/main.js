@@ -284,7 +284,9 @@ function printDataValidation() {
     const rev = gebi('rev').value
     const wo = gebi('wonum').value
     const empId = gebi('emp').value
+    const empIdDivHidden = gebi('empdiv').hidden
     const qty = gebi('qty').value
+    const qtyDivHidden = gebi('qtydiv').hidden
     
     if (!validatePn(pn)) return;
     if (!validateWoNum(wo)) return;
@@ -302,11 +304,11 @@ function printDataValidation() {
         confirmed = (confirm('Rev number is empty. Print regardless?'));
         if (!confirmed) return false;
     }
-    if (!empId) {
+    if (!empId && !empIdDivHidden) {
         confirmed = (confirm('No employee ID is entered. Print regardless?'))
         if (!confirmed) return false;
     }
-    if (!qty) {
+    if (!qty && !qtyDivHidden) {
         confirmed = (confirm('No qty is entered. Print regardless?'))
         if (!confirmed) return false;
     }
