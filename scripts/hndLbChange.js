@@ -44,7 +44,7 @@ function lbTypeChange(idx) {
             qcSubsections('qci')
             break;
         case 12:
-            qtydiv.hidden = true
+            // qtydiv.hidden = true
             ccdiv.hidden = true
             srSections('std')
             break;
@@ -55,8 +55,12 @@ function lbTypeChange(idx) {
 
 function srSections(type){
     if (type == 'std'){
+        const ms = gebi('midsection')
         gebi('subsections').classList.add('hide')
         document.getElementsByClassName('hrNoTBMargin')[1].classList.add('hide')
+        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+        ms.children[1].classList.add('ss23')
+        ms.children[1].classList.add('vr')
     }
 }
 

@@ -352,6 +352,8 @@ function validatePn(pn) {
     return false;
 }
 
+
+// todo: add ability to check if wo is actaully a po number...
 let oneTimeSkipWoValid
 function validateWoNum(wo) {
     if (!wo) {
