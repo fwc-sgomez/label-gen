@@ -6,10 +6,13 @@ function lbTypeChange(idx) {
     const ncrdiv = gebi('ncrdiv')
     const expdiv = gebi('expdiv')
     const empdiv = gebi('empdiv')
+    const qtydiv = gebi('qtydiv')
     ccdiv.hidden = false
     ncrdiv.hidden = true
     expdiv.hidden = true
     empdiv.hidden = true
+    qtydiv.hidden = false
+    document.getElementsByClassName('hrNoTBMargin')[1].classList.remove('hide')
     switch (idx) {
         case 1: // machWip
             createSubsections(['WO Number', 'Employee ID', 'Quantity'])
@@ -40,8 +43,20 @@ function lbTypeChange(idx) {
         case 10: // qc insp
             qcSubsections('qci')
             break;
+        case 12:
+            qtydiv.hidden = true
+            ccdiv.hidden = true
+            srSections('std')
+            break;
         default:
             showWarningMessage('invalid label type selection!')
+    }
+}
+
+function srSections(type){
+    if (type == 'std'){
+        gebi('subsections').classList.add('hide')
+        document.getElementsByClassName('hrNoTBMargin')[1].classList.add('hide')
     }
 }
 
@@ -158,5 +173,31 @@ function createStdSubsection(type, label, vr, larger) {
 }
 
 function clearSubsections() {
-    document.getElementById('subsections').innerHTML = ''
+    const ss = document.getElementById('subsections')
+    ss.innerHTML = ''
+    ss.classList.remove('hide')
+}
+
+function addParameterOption(name, placeholder, validationReq){
+    const parent = gebi('form')
+    const div = document.createElement('div')
+    const cleanName = `${name.replace(/[^a-zA-Z0-9.,_-]/g, '').toLowerCase()}`
+    div.id = cleanName+'div'
+
+    const lb = document.createElement('label')
+    lb.setAttribute('for', cleanName)
+    lb.textContent = `${name}:`
+    div.append(lb)
+
+    const input = document.createElement('input')
+    input.type = 'text'
+    input.name = cleanName
+    input.id = cleanName
+    input.placeholder = placeholder
+    input.oninput = function() {
+        gebi(`sslb${cleanName}`).textContent = input.value
+    }
+    div.append(input)
+
+    parent.append(div)
 }
