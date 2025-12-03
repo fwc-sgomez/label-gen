@@ -225,6 +225,14 @@ function generateBarcode(element, text, cWidth){
 
 function handlePrint() {
     const pt = gebi('printType').selectedIndex
+    const bt = gebi('btnPrint')
+    
+    // prevent accidental double clicks
+    bt.disabled = true
+    setTimeout(() => {
+        bt.disabled = false
+    }, 500)
+
     if (!printDataValidation()) return;
     if (pt == 0) {
         // print app
@@ -238,6 +246,21 @@ function handlePrint() {
 }
 
 async function printUsingApp() {
+    await convertToPng()
+    console.log('sending data:')
+    console.log(imgData)
+    console.log(imgData.length)
+    
+    open(`fwcpa://print`)
+    wsImageData(imgData) // set imgdata
+    wsStart() // start the server and send data once connected
+
+    saveToPrintHistory()
+    loadPrintHistory()
+    showWarningMessage('If nothing happened, change "Print using" to "Built-in"', 5, 'yellow')
+}
+
+async function legacyPrintUsingApp() {
     await convertToPng()
     console.log('opening with data:')
     console.log(imgData)
@@ -254,16 +277,14 @@ async function printUsingApp() {
 function printBuiltIn() {
     print()
 }
+
 let oneTimeSkipPnValid = false;
-// needs bugfix: confirming one confirm() doesn't allow for verification completion
 function printDataValidation() {
     const pn = gebi('part').value
     const rev = gebi('rev').value
     const wo = gebi('wonum').value
     const empId = gebi('emp').value
     const qty = gebi('qty').value
-
-
     
     if (!validatePn(pn)) return;
     if (!validateWoNum(wo)) return;
