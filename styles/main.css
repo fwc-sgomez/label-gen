@@ -134,7 +134,7 @@ hr {
     margin-right: auto;
     border-color: #000;
     border-style: solid;
-    /* z-index: 99; */
+    z-index: 10;
     position: relative;
 }
 
