@@ -48,11 +48,11 @@ function lbTypeChange(idx) {
 function cleanMidsection() {
     const ms = gebi('midsection')
 
-    // all divs *should* be appended, so child 0 should always be the original div
+    // all divs *should* be appended, so child 1 should always be the original div, child 0 is the p element with the "lot" text.
     for (let i = 0; i < ms.children.length; i++) { // HTMLCollection does not support forEach 
-        if (i != 0){
+        if (i > 1){
             ms.children[i].remove()
-        } else if (i == 0) {
+        } else if (i == 1) {
             ms.children[i].className = 'barcodeContainer'
         }
     }
@@ -60,6 +60,7 @@ function cleanMidsection() {
 
 function qcSubsections(type) {
     const parent = gebi('subsections')
+    const indexOfBarcodeDiv = 1
     updateLotBarcode()
     if (type == 'pass') {
         // pass
@@ -70,14 +71,14 @@ function qcSubsections(type) {
     } else if (type == 'fail') {
         // fail
         const ms = document.getElementById('midsection')
-        ms.children[0].className += ' ss23 vr'
+        ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
         ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
         
         parent.append(createLargeQcText('*QC FAIL*', 'ss23', true))
         parent.append(createStdSubsection('ssTri', 'NCR #', false, true))
     } else if (type == 'fai') {
         const ms = document.getElementById('midsection')
-        ms.children[0].className += ' ss23 vr'
+        ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
         ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
 
         parent.append(createLargeQcText('********FAI********', 'ssMono', false))
@@ -85,7 +86,7 @@ function qcSubsections(type) {
         // parent.append(createStdSubsection('ssTri', 'NCR #', false, true))
     } else if (type == 'qci') {
         const ms = document.getElementById('midsection')
-        ms.children[0].className += ' ss23 vr'
+        ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
         ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
 
         parent.append(createLargeQcText('QC INSPECTION', 'ssMono', false))
