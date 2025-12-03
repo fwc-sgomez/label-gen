@@ -59,9 +59,10 @@ body {
 
 .bcNote {
     position: absolute;
-    margin-top: 42px;
-    margin-left: 25px;
-    z-index: 99;
+    margin-top: 38px;
+    margin-left: -280px;
+    z-index: 1;
+    font-weight: bolder;
 }
 
 .note {
@@ -71,6 +72,10 @@ body {
 
 .data {
     margin-left: 8%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .section {
