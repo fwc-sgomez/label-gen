@@ -252,7 +252,7 @@ async function printUsingApp() {
     console.log(imgData.length)
     
     open(`fwcpa://print`)
-    wsImageData(imgData) // set imgdata
+    wsSetImage(imgData) // set imgdata
     wsStart() // start the server and send data once connected
 
     saveToPrintHistory()
