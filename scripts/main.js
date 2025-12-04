@@ -381,7 +381,7 @@ async function convertToPng() {
     await html2canvas(label).then((canvas) => {
         label.classList.remove('scale2')
         // document.body.appendChild(canvas)
-        imgData = canvas.toDataURL('image/jpeg', 0.7)
+        imgData = canvas.toDataURL('image/webp')
     });
 }
 
