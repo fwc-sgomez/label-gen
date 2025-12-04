@@ -1,4 +1,4 @@
-const wsUri = "ws://127.0.0.1/";
+const wsUri = "ws://127.0.0.1:21845/";
 let ws;
 let wsImageData;
 
