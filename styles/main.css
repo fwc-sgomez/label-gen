@@ -189,6 +189,10 @@ hr {
     display: none;
 }
 
+.scale2 {
+    transform: scale(1.75);
+}
+
 @media print {
     @page {
         size: 54mm 101mm;

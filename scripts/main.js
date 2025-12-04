@@ -377,8 +377,11 @@ function validateWoNum(wo) {
 let imgData;
 async function convertToPng() {
     const label = gebi('label')
+    label.classList.add('scale2')
     await html2canvas(label).then((canvas) => {
-        imgData = canvas.toDataURL()
+        label.classList.remove('scale2')
+        // document.body.appendChild(canvas)
+        imgData = canvas.toDataURL('image/jpeg', 0.7)
     });
 }
 
