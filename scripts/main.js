@@ -161,13 +161,14 @@ function updateLotBarcode(){
     const wo = gebi('wonum').value
     const cc = gebi('cc').value
     const lbType = gebi('labelType').selectedIndex
+    const ccHidden = gebi('ccdiv').hidden
     let width = 2 // full width
     if ((lbType > 7) && (lbType < 11) || (lbType == 12)) width = 1.25 // range, labels 5 thru 7 req midsection to be shorter
 
     lbwo = gebi('sslbwonumber')
     if (lbwo) lbwo.textContent = wo
 
-    lotCode = generateMachLot(wo, cc)
+    lotCode = generateMachLot(wo, ccHidden ? '' : cc)
     if (input) {
         lotCode = input
         gebi('lotNote').hidden = false
@@ -364,6 +365,9 @@ function validateWoNum(wo) {
     }
     if (oneTimeSkipWoValid){
         oneTimeSkipWoValid = false
+        return true;
+    }
+    if (gebi('wopo').textContent.includes('PO Number')){
         return true;
     }
     const reg = new RegExp(/[0-9]{6}-[0-9]{3}/gm)

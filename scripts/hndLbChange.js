@@ -7,11 +7,13 @@ function lbTypeChange(idx) {
     const expdiv = gebi('expdiv')
     const empdiv = gebi('empdiv')
     const qtydiv = gebi('qtydiv')
+    const wopo = gebi('wopo')
     ccdiv.hidden = false
     ncrdiv.hidden = true
     expdiv.hidden = true
     empdiv.hidden = true
     qtydiv.hidden = false
+    wopo.textContent = 'Work Order:'
     document.getElementsByClassName('hrNoTBMargin')[1].classList.remove('hide')
     switch (idx) {
         case 1: // machWip
@@ -22,6 +24,7 @@ function lbTypeChange(idx) {
         case 3: // invLtdShelf
             createSubsections(['Exp Date', 'Quantity'])
             expdiv.hidden = false
+            wopo.textContent = 'PO Number:'
             break;
         case 4: // invWipFg
             createSubsections(['Employee ID', 'Quantity'])
@@ -29,24 +32,30 @@ function lbTypeChange(idx) {
             break;
         case 5: // invRec
             createSubsections(['Quantity'])
+            wopo.textContent = 'PO Number:'
             break;
         case 7: // qcpass
             qcSubsections('pass')
+            wopo.textContent = 'PO Number:'
             break;
         case 8: // qcfail
             qcSubsections('fail')
             ncrdiv.hidden = false
+            wopo.textContent = 'PO Number:'
             break;
         case 9: // qcfai
             qcSubsections('fai')
+            wopo.textContent = 'PO Number:'
             break;
         case 10: // qc insp
             qcSubsections('qci')
+            wopo.textContent = 'PO Number:'
             break;
         case 12:
             // qtydiv.hidden = true
             ccdiv.hidden = true
             srSections('std')
+            wopo.textContent = 'PO Number:'
             break;
         default:
             showWarningMessage('invalid label type selection!')
@@ -109,6 +118,7 @@ function qcSubsections(type) {
         ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
 
         parent.append(createLargeQcText('QC INSPECTION', 'ssMono', false))
+        
     }
 }
 

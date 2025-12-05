@@ -115,7 +115,7 @@
                     <input type="text" name="lot" id="lot" placeholder='defaults to WO# and date' oninput='updateLotBarcode()'>
                     <p style='color: red;' id='lotNote' hidden>Note: If above lot number is filled in, the lot number will not be automatically calculated according to WO/PO number, todays date, and CC if applicable.</p>
                     <hr>
-                    <label for="wonum">Work Order:</label>
+                    <label id='wopo' for="wonum">Work Order:</label>
                     <input type="text" name="wonum" id="wonum" placeholder='000000-000' oninput='updateLotBarcode()'>
                     <br>
                     <div id='empdiv'>
@@ -131,7 +131,7 @@
                     </div>
                     <div id='ccdiv'>
                         <label for="cc">CC:</label>
-                        <input type="text" name="cc" id="cc" placeholder='00' oninput='updateLotBarcode()'>
+                        <input type="text" name="cc" id="cc" placeholder='00' value='00' oninput='updateLotBarcode()'>
                         <br>
                     </div>
                     <div id='ncrdiv'>
