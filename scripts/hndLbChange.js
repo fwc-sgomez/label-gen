@@ -68,8 +68,8 @@ function srSections(type){
         gebi('subsections').classList.add('hide')
         document.getElementsByClassName('hrNoTBMargin')[1].classList.add('hide')
         ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
-        ms.children[1].classList.add('ss23')
-        ms.children[1].classList.add('vr')
+        ms.children[0].classList.add('ss23')
+        ms.children[0].classList.add('vr')
     }
 }
 
@@ -78,17 +78,17 @@ function cleanMidsection() {
 
     // all divs *should* be appended, so child 1 should always be the original div, child 0 is the p element with the "lot" text.
     for (let i = 0; i < ms.children.length; i++) { // HTMLCollection does not support forEach 
-        if (i > 1){
+        if (i > 0){
             ms.children[i].remove()
-        } else if (i == 1) {
-            ms.children[i].className = 'barcodeContainer'
+        } else if (i == 0) {
+            ms.children[i].className = 'subsection ssMono'
         }
     }
 }
 
 function qcSubsections(type) {
     const parent = gebi('subsections')
-    const indexOfBarcodeDiv = 1
+    const indexOfBarcodeDiv = 0
     updateLotBarcode()
     if (type == 'pass') {
         // pass
@@ -124,9 +124,10 @@ function qcSubsections(type) {
 
 /**
  * 
- * @param {string} text 
- * @param {'ssMono' | 'ssBi' | 'ssTri' | 'ss23'} type 
- * @param {boolean} vr 
+ * @param {string} text - String to show 
+ * @param {'ssMono' | 'ssBi' | 'ssTri' | 'ss23'} type - Size of subsection
+ * @param {boolean} vr - Use vertical rule
+ * @returns HTMLDivElement
  */
 function createLargeQcText(text, type, vr) {
     const ss = document.createElement('div')

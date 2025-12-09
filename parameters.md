@@ -13,6 +13,8 @@ p=<string, part number>
 w=<string, work order>
 cmp=<string, “cf” | “fwc”>
 lbt=<number, 0-7> (see section below)
+des=<string, description - only for lbt 8>
+id=<integer, request id - only for lbt 8>
 ```
 
 lbt codes
@@ -24,6 +26,7 @@ lbt codes
 1: Inventory, Limited shelf
 2: Inventory, WIP to FG
 3: Inventory, Recieve to inventory
+8: Inventory, Consumable request fulfilment
 4: QC, Pass
 5: QC, Fail
 6: QC, FAI
