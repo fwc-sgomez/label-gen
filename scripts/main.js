@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => { // hmm
     detectBrowser()
     loadPrintHistory()
 })
+window.addEventListener('blur', () => {
+    clearInterval(paWarningMsgTimeoutId)
+})
 
 const Companies = {
     Fwc: 'fwc',
@@ -252,6 +255,8 @@ function handlePrint() {
     }
 }
 
+let paWarningMsgTimeoutId;
+
 async function printUsingApp() {
     await convertToPng()
     console.log('sending data:')
@@ -264,21 +269,9 @@ async function printUsingApp() {
 
     saveToPrintHistory()
     loadPrintHistory()
-    showWarningMessage('If nothing happened, change "Print using" to "Built-in"', 5, 'yellow')
-}
-
-async function legacyPrintUsingApp() {
-    await convertToPng()
-    console.log('opening with data:')
-    console.log(imgData)
-    console.log(imgData.length)
-    if (imgData.length > 30000) { // if data is longer than a certain amount, the app won't be opened/called/anything. silent fail
-        console.warn('data length > 30k !!')
-    }
-    open(`fwcpa://print?img=${imgData}`)
-    saveToPrintHistory()
-    loadPrintHistory()
-    showWarningMessage('If nothing happened, change "Print using" to "Built-in"', 5, 'yellow')
+    paWarningMsgTimeoutId = setTimeout(()=> {
+        showWarningMessage('If nothing happened, change "Print using" to "Built-in"', 5, 'yellow')
+    }, 1000)
 }
 
 function printBuiltIn() {
