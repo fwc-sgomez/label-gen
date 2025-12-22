@@ -26,8 +26,10 @@ let lastWmTime;
  * @returns void
  */
 function showWarningMessage(message, duration = 5, color = 'red') {
+    const d = new Date()
     const timeDelta = ((Date.now() - lastWmTime) / 1000)
-    console.warn(message, Date.now().toString()) // log the message just in case
+    // console.warn(message, Date.now().toString()) // log the message just in case
+    console.log(`${d.toLocaleString()}: ${message}`)
     if ((lastWarningMessage == message) && timeDelta < 3) return;
     lastWarningMessage = message
     lastWmTime = Date.now()
