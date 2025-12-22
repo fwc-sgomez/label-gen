@@ -2,7 +2,7 @@ function detectBrowser() {
     const uaData = navigator.userAgentData;
     const b = uaData.brands.find(brand => brand.brand == 'Microsoft Edge')
     if (b) {
-        showWarningMessage('For Edge browser only: When printing, set "Layout" to "Portrait"', 20, )
+        showWarningMessage('For Edge browser only: When printing, set "Layout" to "Portrait"', 20, 'yellow')
     } 
 }
 
@@ -22,7 +22,7 @@ let lastWmTime;
  * show a warning/alert message to the user.
  * @param {string} message text to display in the warning message
  * @param {number} duration duration in seconds to show message. default is 5s
- * @param {string} color background color of message box. default is 'red'
+ * @param {string} color background color of message box. default is 'red' and only 'yellow' inverts text color.
  * @returns void
  */
 function showWarningMessage(message, duration = 5, color = 'red') {
@@ -40,11 +40,23 @@ function showWarningMessage(message, duration = 5, color = 'red') {
     const warnMsg = document.createElement('p')
     warnMsg.className = 'warningMessage'
     warnMsg.innerHTML = message
-
     warningDiv.append(warnMsg)
+
+    const prog = document.createElement('progress')
+    prog.max = 100
+    prog.value = 100
+    warningDiv.append(prog)
+
+    const startTime = Date.now()
+    const endTime = (startTime + (duration * 1000))
+    const iid = setInterval(() => {
+        prog.value = (100 - (((Date.now()-startTime) / (endTime-startTime)) * 100))
+    }, 10)
+
     if (duration > 0){
         setTimeout(() => {
             warningDiv.remove()
+            clearInterval(iid)
         }, (duration * 1000));
     }
 

@@ -170,8 +170,11 @@ hr {
     min-height: 30px;
     justify-content: center;
     display: flex;
-    margin-bottom: 10px;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 10px;
     border-radius: 10px;
+    overflow: clip;
 }
 
 .warningMessage {
@@ -197,6 +200,16 @@ hr {
 
 .scale2 {
     transform: scale(2);
+}
+
+.warningMessage p {
+    margin: 0;
+}
+
+progress {
+    position: relative;
+    bottom: -6px;
+    width: -webkit-fill-available;
 }
 
 @media print {

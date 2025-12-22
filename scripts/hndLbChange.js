@@ -65,7 +65,7 @@ function lbTypeChange(idx) {
 function srSections(type){
     if (type == 'std'){
         const ms = gebi('midsection')
-        gebi('subsections').classList.add('hide')
+        gebi('lowersection').classList.add('hide')
         document.getElementsByClassName('hrNoTBMargin')[1].classList.add('hide')
         ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
         ms.children[0].classList.add('ss23')
@@ -87,7 +87,7 @@ function cleanMidsection() {
 }
 
 function qcSubsections(type) {
-    const parent = gebi('subsections')
+    const parent = gebi('lowersection')
     const indexOfBarcodeDiv = 0
     updateLotBarcode()
     if (type == 'pass') {
@@ -146,7 +146,7 @@ function createLargeQcText(text, type, vr) {
  * @param {Array<string>} labels array of labels to use
  */
 function createSubsections(labels) {
-    const parent = document.getElementById('subsections')
+    const parent = document.getElementById('lowersection')
     const types =  ['ssMono', 'ssBi', 'ssTri']
 
     let idx = 0
@@ -188,7 +188,7 @@ function createStdSubsection(type, label, vr, larger) {
 }
 
 function clearSubsections() {
-    const ss = document.getElementById('subsections')
+    const ss = document.getElementById('lowersection')
     ss.innerHTML = ''
     ss.classList.remove('hide')
 }

@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => { // hmm
     updatePnBarcode()
     updateLotBarcode()
     updateCompany()
-    detectBrowser()
     loadPrintHistory()
 })
+
 window.addEventListener('blur', () => {
     clearInterval(paWarningMsgTimeoutId)
 })
@@ -278,7 +278,6 @@ function printBuiltIn() {
     print()
 }
 
-let oneTimeSkipPnValid = false;
 function printDataValidation() {
     const pn = gebi('part').value
     const rev = gebi('rev').value
@@ -315,9 +314,14 @@ function printDataValidation() {
     return true;
 }
 
+let oneTimeSkipPnValid = false;
 function validatePn(pn) {
     // /[0-9]{5}[A-Za-z]{2}[0-9]{4}-[0-9]{2}/gm (match nnnnnxxnnnn-nn)
     // /[A-Za-z]{3}-[0-9]{2}-[A-Za-z]{2}-[0-9]{5}/gm (match xxx-nn-xx-xxxxx)
+
+    const regType1 = new RegExp(/[0-9]{5}[A-Za-z]{2}[0-9]{4}/gm)
+    const regType2 = new RegExp(/[A-Za-z]{3}[0-9]{2}[A-Za-z]{2}[0-9]{4}/gm)
+    const regType3 = new RegExp(/[A-Za-z]{3}-[0-9]{2}-[A-Za-z]{2}-[0-9]{5}/gm)
     
     // allow bypassing pn validation in case i missed something
     if (oneTimeSkipPnValid) {
@@ -326,32 +330,19 @@ function validatePn(pn) {
     }
 
     if (pn.length == 11){
-        // likely part number
-        const reg = new RegExp(/[0-9]{5}[A-Za-z]{2}[0-9]{4}/gm)
-        const regType2 = new RegExp(/[A-Za-z]{3}[0-9]{2}[A-Za-z]{2}[0-9]{4}/gm)
-        if (reg.test(pn)){
+        // likely part/ven number
+        if ((regType1.test(pn)) || regType2.test(pn)){
             return true;
-        } else if (regType2.test(pn)) {
-            return true
-        } else {
-            showWarningMessage('Part number failed validation check. Make sure it\'s in the correct format.')
-            // return false;
         }
-        
     } else if (pn.length == 15) {
-        // likely ven number
-        const reg = new RegExp(/[A-Za-z]{3}-[0-9]{2}-[A-Za-z]{2}-[0-9]{5}/gm)
-        if (reg.test(pn)){
+        // likely ven/legacy number
+        if (regType3.test(pn)){
             return true;
-        } else {
-            showWarningMessage('Part number failed validation check. Make sure it\'s in the correct format.')
-            // return false;
         }
-    } else {
-        showWarningMessage('Part number failed validation check. Make sure it\'s in the correct format.')
-        // return false
     }
-    showWarningMessage('<p onclick="oneTimeSkipPnValid=true; handlePrint()">Click this message to skip part number validation and try again.</p>', 10, 'orange')
+
+    showWarningMessage('Part number failed validation check. Make sure it\'s in the correct format.')
+    showWarningMessage('<p onclick="oneTimeSkipPnValid=true; handlePrint()">Click this message to skip part number validation and try again.</p>', 5, 'orange')
     return false;
 }
 
@@ -367,16 +358,16 @@ function validateWoNum(wo) {
         return true;
     }
     if (gebi('wopo').textContent.includes('PO Number')){
+        // i don't know if we have a std po format, so effectively skip validation
         return true;
     }
     const reg = new RegExp(/[0-9]{6}-[0-9]{3}/gm)
     if (reg.test(wo)){
         return true
-    } else {
-        showWarningMessage('Work order number failed validation check. Make sure it\'s in the correct format.')
     }
-
-    showWarningMessage('<p onclick="oneTimeSkipWoValid=true; handlePrint()">Click this message to skip part number validation and try again.</p>', 10, 'orange')
+    
+    showWarningMessage('Work order number failed validation check. Make sure it\'s in the correct format.')
+    showWarningMessage('<p onclick="oneTimeSkipWoValid=true; handlePrint()">Click this message to skip part number validation and try again.</p>', 5, 'orange')
     return false
 }
 
@@ -404,6 +395,7 @@ function setPrintType(idx) {
 
     if ((idx == 1) && (!hide)){
         // set to built-in printing. show a message about setting printer.
+        detectBrowser() // if edge and using built-in, show message to set to landscape
         showWarningMessage('When using built-in printing, make sure to add and set the DYMO printer as a printer within the printing settings.', 30, 'yellow')
         showWarningMessage('Set paper size to "99014 Shipping" for 2 1/8" x 4" labels.', 30, 'yellow')
         showWarningMessage('<p onclick=\'neverShowPaperTypeMsg()\'>Click this message to never show these reminders again.</p>', 30, 'yellow')
