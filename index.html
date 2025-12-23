@@ -5,12 +5,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <title>FWC Label Generator</title>
         <link rel='icon' type='image/x-icon' href='favicon.ico'>
-        <script src='scripts/util.js'></script>
-        <script src='scripts/main.js'></script>
-        <script src='scripts/store.js'></script>
-        <script src='scripts/printHistory.js'></script>
-        <script src='scripts/hndLbChange.js'></script>
-        <script src='scripts/ws.js'></script>
+        <!-- load scripts at the bottom of html -->
         <script src='https://cdn.jsdelivr.net/npm/jsbarcode@3.12.1/dist/barcodes/JsBarcode.code128.min.js'></script>
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
@@ -33,7 +28,7 @@
             
             <div class='headerItem'>
                 <label for="labelType">Label type:</label>
-                <select name="labelType" id="labelType" onchange='lbTypeChange(this.selectedIndex)'>
+                <select name="labelType" id="labelType" onchange='lbTypeChange(this.value)'>
                     <option disabled>-- Machining --</option>
                     <option value="machwip" selected>Machining WIP</option>
                     <option disabled>-- Inventory --</option>
@@ -161,4 +156,11 @@
             </div>
         </div>
     </body>
+    <!-- script load here -->
+    <script src='scripts/util.js'></script>
+    <script src='scripts/main.js'></script>
+    <script src='scripts/store.js'></script>
+    <script src='scripts/printHistory.js'></script>
+    <script src='scripts/hndLbChange.js'></script>
+    <script src='scripts/ws.js'></script>
 </html>

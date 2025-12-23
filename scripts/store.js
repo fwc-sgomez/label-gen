@@ -1,10 +1,12 @@
-
-const ver = '1.1.0'
+const ver = '2.0.0'
+// a major ver update introduce changes that break functionality if old settings/print history are present.
+// currently not doing much with the minor/patch
 const debug = false
+
 
 const defaultSettings = {
     init: true,
-    lbType: 1,
+    lbType: 'machwip',
     ver: ver,
     cmp: 0,
     printType: 0,
@@ -18,7 +20,18 @@ function init() {
         lsStore('settings', defaultSettings)
         lsStore('prints', '[]') // init empty array
     }
+    if (parseVersion(settings.ver).major < parseVersion(ver).major){
+        console.log('app update reset settings!')
+        lsStore('settings', defaultSettings)
+        lsStore('prints', '[]')
+        showWarningMessage('App updated. Settings and print history reset to avoid compatibility issues.', 10, 'yellow')
+    }
 } init()
+
+function parseVersion(ver) {
+    const verSplit = ver.split('.')
+    return {major: verSplit[0], minor: verSplit[1], patch: verSplit[2]}
+}
 
 /**
  * store data into a key

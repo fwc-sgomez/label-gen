@@ -14,21 +14,13 @@ window.addEventListener('blur', () => {
     clearInterval(paWarningMsgTimeoutId)
 })
 
-const Companies = {
-    Fwc: 'fwc',
-    Cf: 'cf'
-}
-
-const LabelTypes = [
-    'machwip',
-    'invltdshelf',
-    'invwipfg',
-    'invrec'
-]
-
 function setFromSettings() {
     const settings = lsReadJson('settings')
-    gebi('labelType').selectedIndex = settings.lbType
+    const lbType = gebi('labelType')
+    lbType.value = settings.lbType
+    const e = new Event('change')
+    lbType.dispatchEvent(e)
+
     lbTypeChange(settings.lbType)
     gebi('company').selectedIndex = settings.cmp
     gebi('printType').selectedIndex = settings.printType
@@ -163,12 +155,12 @@ function updateLotBarcode(){
     const input = gebi('lot').value
     const wo = gebi('wonum').value
     const cc = gebi('cc').value
-    const lbType = gebi('labelType').selectedIndex
+    const lbType = gebi('labelType').value
     const ccHidden = gebi('ccdiv').hidden
     const sslblot = gebi('sslblot')
 
     let width = 'larger' // full width
-    if ((lbType > 7) && (lbType < 11) || (lbType == 12)) width = 'large' // range, labels 5 thru 7 req midsection to be shorter
+    if ((lbType.startsWith('qc')) || (lbType.startsWith('sr'))) width = 'large' // qc labels and s&r labels should just be large, not larger
     sslblot.classList.replace(sslblot.classList[0], width)
 
     lbwo = gebi('sslbwonumber')
@@ -190,10 +182,7 @@ function updateLotBarcode(){
         showWarningMessage('Lot code is longer than 15 characters! This may not be accepted in GSS.')
     }
 
-    // generateBarcode('#lotBc', lotCode, width)
-    
     sslblot.innerHTML = lotCode
-
 }
 
 function generateMachLot(woNum, cc = false){
