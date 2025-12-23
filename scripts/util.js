@@ -30,7 +30,7 @@ function showWarningMessage(message, duration = 5, color = 'red') {
     const timeDelta = ((Date.now() - lastWmTime) / 1000)
     // console.warn(message, Date.now().toString()) // log the message just in case
     console.log(`${d.toLocaleString()}: ${message}`)
-    if ((lastWarningMessage == message) && timeDelta < 3) return;
+    if ((lastWarningMessage == message) && (timeDelta < 3)) return;
     lastWarningMessage = message
     lastWmTime = Date.now()
     const parent = gebi('warnings')
