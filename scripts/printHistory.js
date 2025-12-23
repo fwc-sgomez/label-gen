@@ -94,7 +94,11 @@ function reloadPrint(id) {
     const prints = lsReadJson('prints')
     const print = prints[id]
 
-    gebi('labelType').selectedIndex = print.lbType
+    const lbType = gebi('labelType')
+    lbType.value = print.lbType
+    const e = new Event('change')
+    lbType.dispatchEvent(e)
+
     lbTypeChange(print.lbType)
     
     gebi('part').value = print.part

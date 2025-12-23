@@ -1,5 +1,5 @@
-function lbTypeChange(idx) {
-    updateSetting("lbType", idx)
+function lbTypeChange(value) {
+    updateSetting("lbType", value)
     clearSubsections()
     cleanMidsection()
     const ccdiv = gebi('ccdiv')
@@ -15,43 +15,43 @@ function lbTypeChange(idx) {
     qtydiv.hidden = false
     wopo.textContent = 'Work Order:'
     document.getElementsByClassName('hrNoTBMargin')[1].classList.remove('hide')
-    switch (idx) {
-        case 1: // machWip
+    switch (value) {
+        case 'machwip': // machWip
             createSubsections(['WO Number', 'Employee ID', 'Quantity'])
             ccdiv.hidden = true
             empdiv.hidden = false
             break;
-        case 3: // invLtdShelf
+        case 'invltdshelf': // invLtdShelf
             createSubsections(['Exp Date', 'Quantity'])
             expdiv.hidden = false
             wopo.textContent = 'PO Number:'
             break;
-        case 4: // invWipFg
+        case 'invwipfg': // invWipFg
             createSubsections(['Employee ID', 'Quantity'])
             empdiv.hidden = false
             break;
-        case 5: // invRec
+        case 'invrec': // invRec
             createSubsections(['Quantity'])
             wopo.textContent = 'PO Number:'
             break;
-        case 7: // qcpass
+        case 'qcpass': // qcpass
             qcSubsections('pass')
             wopo.textContent = 'PO Number:'
             break;
-        case 8: // qcfail
+        case 'qcfail': // qcfail
             qcSubsections('fail')
             ncrdiv.hidden = false
             wopo.textContent = 'PO Number:'
             break;
-        case 9: // qcfai
+        case 'qcfai': // qcfai
             qcSubsections('fai')
             wopo.textContent = 'PO Number:'
             break;
-        case 10: // qc insp
+        case 'qcinsp': // qc insp
             qcSubsections('qci')
             wopo.textContent = 'PO Number:'
             break;
-        case 12:
+        case 'srstd':
             // qtydiv.hidden = true
             ccdiv.hidden = true
             srSections('std')
