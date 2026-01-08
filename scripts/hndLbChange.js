@@ -1,18 +1,29 @@
 function lbTypeChange(value) {
+    if (getSetting('lbType') == 'invconsumables') {
+        restoreFromInvC()
+    }
     updateSetting("lbType", value)
     clearSubsections()
     cleanMidsection()
+
+    gebi('ptndiv').hidden = true
+    gebi('descdiv').hidden = true
+    gebi('riddiv').hidden = true
+    gebi('deptdiv').hidden = true
+
     const ccdiv = gebi('ccdiv')
     const ncrdiv = gebi('ncrdiv')
     const expdiv = gebi('expdiv')
     const empdiv = gebi('empdiv')
     const qtydiv = gebi('qtydiv')
+    const wodiv = gebi('wodiv')
     const wopo = gebi('wopo')
     ccdiv.hidden = false
     ncrdiv.hidden = true
     expdiv.hidden = true
     empdiv.hidden = true
     qtydiv.hidden = false
+    wodiv.hidden = false
     wopo.textContent = 'Work Order:'
     document.getElementsByClassName('hrNoTBMargin')[1].classList.remove('hide')
     switch (value) {
@@ -33,6 +44,12 @@ function lbTypeChange(value) {
         case 'invrec': // invRec
             createSubsections(['Quantity'])
             wopo.textContent = 'PO Number:'
+            break;
+        case 'invconsumables':
+            invConsumables()
+            wodiv.hidden = true
+            empdiv.hidden = true
+            ccdiv.hidden = true
             break;
         case 'qcpass': // qcpass
             qcSubsections('pass')
@@ -62,12 +79,84 @@ function lbTypeChange(value) {
     }
 }
 
-function srSections(type){
+function invConsumables() {
+    // each row has max length of 142 characters
+    // ss23 can hold up to about 96 characters
+    // this label type kina hijacks the entire label
+    const topSsName = 'Part/Tool Number'
+    const midSsItemDesc = 'Item Description'
+    const msParent = gebi('midsection')
+    const lsParent = gebi('lowersection')
+
+    gebi('ptndiv').hidden = false
+    gebi('descdiv').hidden = false
+    gebi('riddiv').hidden = false
+    gebi('deptdiv').hidden = false
+
+    clearSubsections('topsection')
+    createSubsections([topSsName], 'topsection', false)
+    const tss = gebi(getSubsectionName(topSsName))
+    tss.classList.add('noTBMargin')
+
+    clearSubsections('midsection')
+    msParent.append(getStdSubsection('ss23', midSsItemDesc, true, false))
+    msParent.append(getStdSubsection('ssTri', 'Req ID', false, true))
+    const mss = gebi(getSubsectionName(midSsItemDesc))
+    mss.classList.add('noTBMargin')
+    mss.classList.add('padLeft')
+
+    clearSubsections('lowersection')
+    lsParent.append(getStdSubsection('ss23', 'Department', true, true))
+    lsParent.append(getStdSubsection('ssTri', 'Quantity', false, true))
+
+    gebi('part').disabled = true
+    gebi('rev').disabled = true
+    gebi('lot').disabled = true
+}
+
+function restoreFromInvC() {
+    clearSubsections('topsection')
+    // clearSubsections('midsectoin')
+    loadStdTopsection()
+    loadStdMidsection()
+    gebi('part').disabled = false
+    gebi('rev').disabled = false
+    gebi('lot').disabled = false
+    updateLotBarcode()
+    updatePnBarcode()
+}
+
+function loadStdTopsection() {
+    const parent = gebi('topsection')
+    parent.innerHTML = `
+        <p class='bcNote'>PN</p>
+        <div class='barcodeContainer'>
+            <svg class='barcode' id='pn'></svg>
+        </div>
+    `
+}
+
+function loadStdMidsection() {
+    const parent = gebi('midsection')
+    parent.innerHTML = `
+        <div class="subsection ssMono">
+            <p class="note">LOT</p>
+            <p id="sslblot" class="large"></p>
+        </div>
+    `
+}
+
+
+function getSubsectionName(name) {
+    return ('sslb' + name.replace(/[^a-zA-Z0-9.,_-]/g, '').toLowerCase())
+}
+
+function srSections(type) {
     if (type == 'std'){
         const ms = gebi('midsection')
         gebi('lowersection').classList.add('hide')
         document.getElementsByClassName('hrNoTBMargin')[1].classList.add('hide')
-        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+        ms.append(getStdSubsection('ssTri', 'Quantity', false, true))
         ms.children[0].classList.add('ss23')
         ms.children[0].classList.add('vr')
     }
@@ -94,20 +183,20 @@ function qcSubsections(type) {
         // pass
         parent.append(createLargeQcText('*QC PASS*', 'ss23', true))
 
-        parent.append(createStdSubsection('ssTri', 'Quantity', false, true))
+        parent.append(getStdSubsection('ssTri', 'Quantity', false, true))
 
     } else if (type == 'fail') {
         // fail
         const ms = document.getElementById('midsection')
         ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
-        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+        ms.append(getStdSubsection('ssTri', 'Quantity', false, true))
         
         parent.append(createLargeQcText('*QC FAIL*', 'ss23', true))
-        parent.append(createStdSubsection('ssTri', 'NCR #', false, true))
+        parent.append(getStdSubsection('ssTri', 'NCR #', false, true))
     } else if (type == 'fai') {
         const ms = document.getElementById('midsection')
         ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
-        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+        ms.append(getStdSubsection('ssTri', 'Quantity', false, true))
 
         parent.append(createLargeQcText('********FAI********', 'ssMono', false))
 
@@ -115,7 +204,7 @@ function qcSubsections(type) {
     } else if (type == 'qci') {
         const ms = document.getElementById('midsection')
         ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
-        ms.append(createStdSubsection('ssTri', 'Quantity', false, true))
+        ms.append(getStdSubsection('ssTri', 'Quantity', false, true))
 
         parent.append(createLargeQcText('QC INSPECTION', 'ssMono', false))
         
@@ -142,20 +231,21 @@ function createLargeQcText(text, type, vr) {
 }
 
 /**
- * 
- * @param {Array<string>} labels array of labels to use
+ * create subsections
+ * @param {Array<string>} labels label text, doubles as its id
+ * @param {string} section choose which section to use, as element id string
  */
-function createSubsections(labels) {
-    const parent = document.getElementById('lowersection')
+function createSubsections(labels, section = 'lowersection', largerFont = true) {
+    const parent = document.getElementById(section)
     const types =  ['ssMono', 'ssBi', 'ssTri']
 
     let idx = 0
     labels.forEach(label => {
         let vr = true
-        let larger = true
+        let larger = largerFont
         if (idx == (labels.length - 1)) vr = false
         if (label == 'WO Number') larger = false
-        parent.append(createStdSubsection(types[labels.length - 1], label, vr, larger))
+        parent.append(getStdSubsection(types[labels.length - 1], label, vr, larger))
         idx++
     })
 }
@@ -167,12 +257,12 @@ function createSubsections(labels) {
  * @param {boolean} vr use vertical rule
  * @param {boolean} vr use larger font. default false
  */
-function createStdSubsection(type, label, vr, larger) {
+function getStdSubsection(type, label, vr, larger) {
     const ss = document.createElement('div')
     ss.className = `subsection ${type}${vr ? ' vr' : ''}`
 
     // remove all characters not alphanumerical (and spaces)
-    const lbId = label.replace(/[^a-zA-Z0-9.,_-]/g, '').toLowerCase()
+    const lbId = getSubsectionName(label)
     
     const p1 = document.createElement('p')
     p1.className = 'note'
@@ -180,15 +270,15 @@ function createStdSubsection(type, label, vr, larger) {
     ss.append(p1)
 
     const p2 = document.createElement('p')
-    p2.id = `sslb${lbId}`
+    p2.id = lbId
     if (larger) p2.className = 'larger'
     ss.append(p2)
 
     return ss
 }
 
-function clearSubsections() {
-    const ss = document.getElementById('lowersection')
+function clearSubsections(section = 'lowersection') {
+    const ss = document.getElementById(section)
     ss.innerHTML = ''
     ss.classList.remove('hide')
 }

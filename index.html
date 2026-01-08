@@ -35,6 +35,7 @@
                     <option value="invltdshelf">Inv Limited Shelf</option>
                     <option value="invwipfg">Inv WIP to FG</option>
                     <option value="invrec">Inv Recieve to Inv</option>
+                    <option value="invconsumables">Inv Consumable Req.</option>
                     <option disabled>-- QC --</option>
                     <option value="qcpass">QC Pass</option>
                     <option value="qcfail">QC Fail</option>
@@ -83,10 +84,6 @@
                             <p class="note">LOT</p>
                             <p id="sslblot" class="large"></p>
                         </div>
-                        <!-- <p class='bcNote'>LOT</p> -->
-                        <!-- <div class='barcodeContainer'> -->
-                            <!-- <svg class='barcode' id='lotBc'></svg> -->
-                        <!-- </div> -->
                     </div>
                     <hr class='hrNoTBMargin'>
     
@@ -115,9 +112,31 @@
                     <input type="text" name="lot" id="lot" placeholder='defaults to WO# and date' oninput='updateLotBarcode()'>
                     <p style='color: red;' id='lotNote' hidden>Note: If above lot number is filled in, the lot number will not be automatically calculated according to WO/PO number, todays date, and CC if applicable.</p>
                     <hr>
-                    <label id='wopo' for="wonum">Work Order:</label>
-                    <input type="text" name="wonum" id="wonum" placeholder='000000-000' oninput='updateLotBarcode()'>
-                    <br>
+                    <div id='ptndiv'>
+                        <label for="ptn">Part/Tool Number:</label>
+                        <input type="text" name="ptn" id="ptn" placeholder='00000XX0000' oninput='gebi("sslbparttoolnumber").textContent = this.value'>
+                        <br>
+                    </div>
+                    <div id='descdiv'>
+                        <label for="desc">Item Description:</label>
+                        <input type="text" name="desc" id="desc" placeholder='Diab HP80 25.4mm' oninput='gebi("sslbitemdescription").textContent = this.value'>
+                        <br>
+                    </div>
+                    <div id='riddiv'>
+                        <label for="rid">Req ID:</label>
+                        <input type="text" name="rid" id="rid" placeholder='0000' oninput='gebi("sslbreqid").textContent = this.value'>
+                        <br>
+                    </div>
+                    <div id='deptdiv'>
+                        <label for="dept">Department:</label>
+                        <input type="text" name="dept" id="dept" placeholder='205 Machining' oninput='gebi("sslbdepartment").textContent = this.value'>
+                        <br>
+                    </div>
+                    <div id='wodiv'>
+                        <label id='wopo' for="wonum">Work Order:</label>
+                        <input type="text" name="wonum" id="wonum" placeholder='000000-000' oninput='updateLotBarcode()'>
+                        <br>
+                    </div>
                     <div id='empdiv'>
                         <label for="emp">Employee ID:</label>
                         <input type="text" name="emp" id="emp" placeholder='0000' oninput='updateEmpId(this.value)'>

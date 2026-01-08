@@ -33,6 +33,11 @@ function checkUrlParams(){
     const urlWo = params.get('w')
     const urlCmp = params.get('cmp')
     const urlSrc = params.get('src')
+    const urlPtn = params.get('ptn')
+    const urlDesc = params.get('desc')
+    const urlRid = params.get('rid')
+    const urlDept = params.get('dept')
+    const urlQty = params.get('qty')
     
     // part number parsing stuff
     // I may be overcomplicating this line below. might need some updating the the handlePnParam function...
@@ -63,7 +68,52 @@ function checkUrlParams(){
     if (urlSrc) {
         // not used yet, but some options would be like mach schedule
         // would be used to determine label type/format.
+        let lbTypeValues = []
+        const opts = gebi('labelType').options
+        for (let i = 0; i < opts.length; i++){
+            if (!opts[i].disabled){
+                lbTypeValues.push(opts[i].value)
+            }
+        }
+        const type = lbTypeValues.find(opt => opt == urlSrc)
+        if (!type) {
+            showWarningMessage('URL contains an invalid source/label type. Please contact maintainer of the application that this URL was generated from.')
+        } else {
+            const changeEvent = new Event('change')
+            const lbType = gebi('labelType')
+            lbType.value = urlSrc
+            lbType.dispatchEvent(changeEvent)
+
+            if (urlSrc == 'invconsumables') setInvCLabel(urlPtn, urlDesc, urlRid, urlDept, urlQty)
+        }
     }
+}
+
+function setInvCLabel(ptn, desc, rid, dept, qty){
+    if (!ptn && !desc && !rid && !dept && !qty) return;
+    if (!ptn) showWarningMessage(`No Part/Tool Number given. Please enter manually.`);
+    if (!desc) showWarningMessage(`No Item Description given. Please enter manually.`);
+    if (!rid) showWarningMessage(`No Request ID given. Please enter manually.`);
+    if (!dept) showWarningMessage(`No Department given. Please enter manually.`);
+    if (!qty) showWarningMessage(`No Quantity given. Please enter manually.`);
+    
+    const inputEvent = new Event('input')
+    const elPtn = gebi('ptn')
+    const elDesc = gebi('desc')
+    const elRid = gebi('rid')
+    const elDept = gebi('dept')
+    const elQty = gebi('qty')
+
+    elPtn.value = ptn
+    elPtn.dispatchEvent(inputEvent)
+    elDesc.value = desc
+    elDesc.dispatchEvent(inputEvent)
+    elRid.value = rid
+    elRid.dispatchEvent(inputEvent)
+    elDept.value = dept
+    elDept.dispatchEvent(inputEvent)
+    elQty.value = qty
+    elQty.dispatchEvent(inputEvent)
 }
 
 function handlePnParam(partNumber) {
@@ -107,6 +157,7 @@ function handlePnParam(partNumber) {
 
 let fullPn;
 function updatePnBarcode(){
+    if (gebi('labelType').value == 'invconsumables') return;
     const pn = gebi('part').value
     const rev = gebi('rev').value
     fullPn = generatePartNumber(pn, rev)
@@ -158,6 +209,11 @@ function updateLotBarcode(){
     const lbType = gebi('labelType').value
     const ccHidden = gebi('ccdiv').hidden
     const sslblot = gebi('sslblot')
+    
+    if (lbType == 'invconsumables'){
+        return;
+        // this lbtype removes the required elements. when switching away, this should be returned.
+    }
 
     let width = 'larger' // full width
     if ((lbType.startsWith('qc')) || (lbType.startsWith('sr'))) width = 'large' // qc labels and s&r labels should just be large, not larger
