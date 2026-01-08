@@ -144,6 +144,15 @@ hr {
     position: relative;
 }
 
+.noTBMargin {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.padLeft {
+    padding-left: 10px;
+}
+
 .hrNoTBMargin {
     margin-top: -2px;
     margin-bottom: 0;

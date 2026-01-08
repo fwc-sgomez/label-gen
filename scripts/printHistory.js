@@ -16,7 +16,11 @@ function saveToPrintHistory() {
         date: Date.now(),
         ncr: gebi('ncr').value,
         cc: gebi('cc').value,
-        exp: gebi('exp').valueAsNumber || 0
+        exp: gebi('exp').valueAsNumber || 0,
+        ptn: gebi('ptn').value,
+        desc: gebi('desc').value,
+        rid: gebi('rid').value,
+        dept: gebi('dept').value,
     }
     console.log(data)
     prints.push(data)
@@ -106,6 +110,10 @@ function reloadPrint(id) {
     gebi('lot').value = print.lot
     gebi('wonum').value = print.wo
     gebi('cc').value = print.cc
+    gebi('ptn').value = print.ptn
+    gebi('desc').value = print.desc
+    gebi('rid').value = print.rid
+    gebi('dept').value = print.dept
     gebi('company').selectedIndex = print.company
     
     gebi('qty').value = print.qty
