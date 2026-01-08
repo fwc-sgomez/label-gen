@@ -221,6 +221,14 @@ progress {
     width: -webkit-fill-available;
 }
 
+.verNote {
+    color: cadetblue;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-right: 15px;
+}
+
 @media print {
     @page {
         size: 54mm 101mm;
