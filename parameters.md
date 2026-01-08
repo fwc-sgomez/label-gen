@@ -12,25 +12,29 @@ Supported parameters
 p=<string, part number>
 w=<string, work order>
 cmp=<string, “cf” | “fwc”>
-lbt=<number, 0-7> (see section below)
-des=<string, description - only for lbt 8>
-id=<integer, request id - only for lbt 8>
+src=<string> (see section below)
+desc=<string>
+rid=<integer>
+qty=<integer>
+dept=<string>
+ptn=<string>
 ```
 
-lbt codes
+src codes
 -------------------
 
-* These codes are used to set which label type to set when opening the web app. These will override the default label or previously set label. If `lbt` is not set, the web app will default to the last used label or default label.
+* These codes are used to set which label type to set when opening the web app. These will override the default label or previously set label. If `src` is not set, the web app will default to the last used label or default label.
 ```
-0: Machining WIP
-1: Inventory, Limited shelf
-2: Inventory, WIP to FG
-3: Inventory, Recieve to inventory
-8: Inventory, Consumable request fulfilment
-4: QC, Pass
-5: QC, Fail
-6: QC, FAI
-7: QC, Inspect
+machwip: Machining WIP
+invltdshelf: Inventory, Limited shelf
+invwipfg: Inventory, WIP to FG
+invrev: Inventory, Recieve to inventory
+invconsumables: Inventory, Consumable request fulfilment
+qcpass: QC, Pass
+qcfail: QC, Fail
+qcfai: QC, FAI
+qcinsp: QC, Inspect
+srstd: S&R, standard label
 ```
 
 Examples
@@ -39,11 +43,11 @@ Examples
     * This hyperlink will grab data in cell A1 and use it for the `p` part number paramter and data in cell B1 for the `w` work order parameter.
     * Customize this as needed for your spreadsheet.
 ```
-=HYPERLINK("https://fwc-sgomez.github.io/label-gen/?p="&A1&"&w="&B1&”&lbt=0”, "print label")
+=HYPERLINK("https://fwc-sgomez.github.io/label-gen/?p="&A1&"&w="&B1&”&src=machwip”, "print label")
 ```
 * Example URL with some parameters:
 ```
-https://fwc-sgomez.github.io/label-gen/?p=08025FN0001-00&w=012345-000&lbt=0
+https://fwc-sgomez.github.io/label-gen/?p=08025FN0001-00&w=012345-000&src=machwip
 ```
 
 Revision history
