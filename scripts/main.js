@@ -396,7 +396,7 @@ function validatePn(pn) {
 let oneTimeSkipWoValid
 function validateWoNum(wo) {
     if (!wo) {
-        return confirm('No WO number is entered. Print regardless?')
+        return confirm('No WO/PO number is entered. Print regardless?')
     }
     if (oneTimeSkipWoValid){
         oneTimeSkipWoValid = false
