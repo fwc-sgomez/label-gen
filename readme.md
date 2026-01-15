@@ -10,9 +10,4 @@ This tool accepts some query parameters that can be used to automatically popula
 
 # query parameters
 
-a small list of currently accepted query parameters:
-
-`p=partNumber` as string, can be with or without rev number
-`w=workOrder` as string
-`src=source` as string, to determine which label to use
- 
+documentation on accpeted query parameters can be seen [Here](https://fwc-sgomez.github.io/label-gen/parameters.html).
