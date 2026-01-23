@@ -229,6 +229,21 @@ progress {
     padding-right: 15px;
 }
 
+.icoHelp {
+    filter: invert(1);
+    border-style: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.feedbackIframe {
+    width: 500;
+    height: 500;
+    position: absolute;
+}
+
 @media print {
     @page {
         size: 54mm 101mm;

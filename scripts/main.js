@@ -452,3 +452,7 @@ function neverShowPaperTypeMsg() {
     updateSetting('neverShowPaperTypeMsg', true)
     showWarningMessage('Saved preference for next time.', )
 }
+
+function showFeedbackForm(){
+    gebi('feedbackIframe').hidden = false
+}
