@@ -244,6 +244,10 @@ progress {
     position: absolute;
 }
 
+#installNote {
+    color: #FFF;
+}
+
 @media print {
     @page {
         size: 54mm 101mm;
