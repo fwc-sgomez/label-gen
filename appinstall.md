@@ -8,6 +8,7 @@ Supported printers and labels
 -------------------
 * The app has been tested to work with Dymo printers.
 * 99014 Shipping/Name Badge Labels have been tested to work. Other sizes should work, but compatibility is not guranteed.
+* NOTE: The print app does not support adding new printers. All Dymo printers must be added from within the Dymo software. Once the printer has been added into the Dymo software
 
 Installation
 -------------------
