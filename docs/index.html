@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>FWC Label Generator | Parameters</title>
-        <link rel='stylesheet' href='styles/md.css'>
+        <title>FWC Label Generator | Docs</title>
+        <link rel='stylesheet' href='/styles/md.css'>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,16 +11,28 @@
     </head>
     <body class='gsans'>
         <div id="content"></div>
+        <div id='noparam' hidden><h1>invalid doc link!</h1></div>
+        <div id='notfound' hidden><h1>doc not found!</h1></div>
         <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
         <script>
             // using an md parser was just easier in terms of flexibility...
 
-            // load md file then let marked parse it
-            fetch('./parameters.md').then(res => {
+            const params = new URLSearchParams(window.location.search)
+            const doc = params.get('doc')
+            if (doc){
+                // load md file then let marked parse it
+            fetch(`./${doc}.md`).then(res => {
                 res.text().then(text => {
                     document.getElementById('content').innerHTML = marked.parse(text);
+                }) .catch(reject => {
+                    console.log(reject)
+                    document.getElementById('notfound').hidden = false
                 })
             })
+            } else {
+                // no document given, show error message
+                document.getElementById('noparam').hidden = false
+            }
         </script>
     </body>
 </html>
