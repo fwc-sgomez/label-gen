@@ -44,3 +44,22 @@ h2 {
 pre code {
     padding: 0
 }
+
+a:link {
+    text-decoration: none;
+    color: #FFF;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #FFF;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #ff0000;
+}
+
+a:active {
+
+}

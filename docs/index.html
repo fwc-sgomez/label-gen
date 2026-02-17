@@ -11,7 +11,14 @@
     </head>
     <body class='gsans'>
         <div id="content"></div>
-        <div id='noparam' hidden><h1>invalid doc link!</h1></div>
+        <div id='noparam' hidden>
+            <h1>Label Generator Docs</h1>
+            <h2>List of available docs</h2>
+            <a href="./?doc=appinstall">Installing the FWCPrintApp</a>
+            <br>
+            <a href="./?doc=parameters">Label Generator URL parameters</a>
+
+        </div>
         <div id='notfound' hidden><h1>doc not found!</h1></div>
         <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
         <script>
@@ -21,14 +28,14 @@
             const doc = params.get('doc')
             if (doc){
                 // load md file then let marked parse it
-            fetch(`./${doc}.md`).then(res => {
-                res.text().then(text => {
-                    document.getElementById('content').innerHTML = marked.parse(text);
+                fetch(`./${doc}.md`).then(res => {
+                    res.text().then(text => {
+                        document.getElementById('content').innerHTML = marked.parse(text);
+                    })
                 }) .catch(reject => {
                     console.log(reject)
                     document.getElementById('notfound').hidden = false
                 })
-            })
             } else {
                 // no document given, show error message
                 document.getElementById('noparam').hidden = false
