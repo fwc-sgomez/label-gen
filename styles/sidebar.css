@@ -1,7 +1,7 @@
 .sidebar {
     /* background-color: aliceblue; */
     position: fixed;
-    height: 100%;
+    height: -webkit-fill-available;
     width: auto;
     overflow: auto;
     border-right: 2px solid #000;
