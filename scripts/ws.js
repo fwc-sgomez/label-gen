@@ -12,6 +12,7 @@ function wsStart(){
     ws = new WebSocket(wsUri);
     ws.onopen = (e) => {
         ws.send(wsImageData);
+        wsStartAttemps = 0;
     }
     
     ws.onmessage = (e) => {
