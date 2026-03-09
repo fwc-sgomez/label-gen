@@ -11,7 +11,9 @@
 
 .phLabel {
     width: 300px;
-    height: 100px;
+    /* height: 100px; */
+    padding-top: 5px;
+    padding-bottom: 5px;
     border-width: 1px;
     /* border-color: black; */
     border-style: solid;
@@ -43,4 +45,8 @@
 
 .phHeader {
     color: #FFF;
+}
+
+.phLabel hr {
+    margin: 3px;
 }
