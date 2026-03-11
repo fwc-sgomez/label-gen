@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => { // hmm
     // setup stuff
     setFromSettings() // prepares defaults
+    metricsMgr = new LabelGenMetrics()
+    metricsMgr.startTimer()
+    metricsMgr.setMetric('pageLoads', Number.parseInt(metricsMgr.getMetric('pageLoads')) + 1)
 
     checkUrlParams() // then check url params so the rest can be updated accordingly
 
@@ -9,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => { // hmm
     updateCompany()
     loadPrintHistory()
 })
+
+let metricsMgr;
 
 window.addEventListener('blur', () => {
     clearInterval(paWarningMsgTimeoutId)
@@ -38,6 +43,14 @@ function checkUrlParams(){
     const urlRid = params.get('rid')
     const urlDept = params.get('dept')
     const urlQty = params.get('qty')
+    
+    const disableMetrics = params.get('disableMetrics') == 'true' ? true : false
+    const currentMetricState = metricsMgr.getMetric('disableMetrics')
+    metricsMgr.setMetric('disableMetrics', disableMetrics)
+
+    if (currentMetricState != disableMetrics) {
+        showWarningMessage(`Metrics have been ${disableMetrics ? 'disabled' : 'enabled'}.`, 5, 'yellow')
+    }
     
     // part number parsing stuff
     // I may be overcomplicating this line below. might need some updating the the handlePnParam function...
@@ -278,7 +291,7 @@ function generateBarcode(element, text, cWidth){
     })
 }
 
-function handlePrint() {
+async function handlePrint() {
     const pt = gebi('printType').selectedIndex
     const bt = gebi('btnPrint')
     
@@ -289,6 +302,8 @@ function handlePrint() {
     }, 500)
 
     if (!printDataValidation()) return;
+    
+    await convertToPng()
     if (pt == 0) {
         // print app
         printUsingApp()
@@ -298,12 +313,16 @@ function handlePrint() {
     } else {
         showWarningMessage('Invalid PrintType selection.')
     }
+
+    metricsMgr.saveLabelMetric()
+    saveImageToPrintHistory(imgData)
+    loadPrintHistory()
+
 }
 
 let paWarningMsgTimeoutId;
 
 async function printUsingApp() {
-    await convertToPng()
     console.log('sending data:')
     console.log(imgData)
     console.log(imgData.length)
@@ -312,8 +331,6 @@ async function printUsingApp() {
     wsSetImage(imgData) // set imgdata
     wsStart() // start the server and send data once connected
 
-    saveToPrintHistory()
-    loadPrintHistory()
     paWarningMsgTimeoutId = setTimeout(()=> {
         showWarningMessage('If nothing happened, change "Print using" to "Built-in"', 5, 'yellow')
     }, 1000)
@@ -426,12 +443,6 @@ async function convertToPng() {
         imgData = canvas.toDataURL('image/webp')
     });
 }
-
-window.addEventListener("afterprint", (event) => {
-    // console.log(event)
-    saveToPrintHistory()
-    loadPrintHistory()
-});
 
 function setPrintType(idx) {
     updateSetting('printType', idx)
