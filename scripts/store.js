@@ -1,4 +1,4 @@
-const ver = '2.0.0'
+const ver = '3.0.0'
 // a major ver update introduce changes that break functionality if old settings/print history are present.
 // currently not doing much with the minor/patch
 const debug = false
@@ -13,18 +13,31 @@ const defaultSettings = {
     neverShowPaperTypeMsg: false
 }
 
+const defaultMetrics = {
+    pageLoads: 0,
+    labelsPrinted: 0,
+    prints: [
+        // {
+        //     lbt: 'machwip',
+        //     tbp: 0 // time between prints (or load)
+        // }
+    ]
+}
+
 function init() {
     const settings = lsReadJson('settings')
     if (!settings.init) {
         console.log('initialising settings!')
         lsStore('settings', defaultSettings)
         lsStore('prints', '[]') // init empty array
+        lsStore('metrics', defaultMetrics)
     }
     if (parseVersion(settings.ver).major < parseVersion(ver).major){
         console.log('app update reset settings!')
         lsStore('settings', defaultSettings)
         lsStore('prints', '[]')
         showWarningMessage('App updated. Settings and print history reset to avoid compatibility issues.', 10, 'yellow')
+        showWarningMessage('<a href=\'./docs?doc=updates\'>Click here to see what\'s new</a>', 10, 'yellow')
     }
 } init()
 
