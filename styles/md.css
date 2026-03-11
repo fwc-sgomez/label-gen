@@ -46,17 +46,17 @@ pre code {
 }
 
 a:link {
-    text-decoration: none;
-    color: #FFF;
+    text-decoration: underline;
+    color: #9ae2ff;
 }
 
 a:visited {
-    text-decoration: none;
-    color: #FFF;
+    text-decoration: underline;
+    color: #9ae2ff;
 }
 
 a:hover {
-    text-decoration: none;
+    text-decoration: underline;
     color: #ff0000;
 }
 
