@@ -1,6 +1,12 @@
-function saveToPrintHistory() {
+function saveImageToPrintHistory(base64Image) {
     const prints = lsReadJson('prints')
     const settings = lsReadJson('settings')
+
+    if (!base64Image){
+        showWarningMessage('Internal error while saving image...', 10, 'red')
+        console.log('image data empty, can\'t save')
+        return
+    }
     
     const data = {
         lbType: settings.lbType,
@@ -21,6 +27,7 @@ function saveToPrintHistory() {
         desc: gebi('desc').value,
         rid: gebi('rid').value,
         dept: gebi('dept').value,
+        img: base64Image
     }
     console.log(data)
     prints.push(data)
@@ -36,6 +43,25 @@ function saveToPrintHistory() {
 }
 
 function loadPrintHistory() {
+    clearPrintHistory()
+    const parent = gebi('prints')
+    const history = lsReadJson('prints')
+
+    let idx;
+    history.forEach(label => {
+        const lbImg = document.createElement('img')
+        lbImg.src = label.img
+        lbImg.id = `im${label.id}`
+        lbImg.className = 'phLabel'
+        lbImg.addEventListener('click', (e) => {
+            reloadPrint(label.id)
+        })
+        parent.prepend(lbImg)
+    })
+
+}
+
+function legacyLoadPrintHistory() {
     clearPrintHistory()
     const parent = gebi('prints')
 
