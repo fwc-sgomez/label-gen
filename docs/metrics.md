@@ -13,7 +13,7 @@ What is reported
 * Label type
 * Time between page load (or time since last label printed) to actual label print
 * Time/date printed
-* Session ID (randomly generated every page visit)
+* Session ID (timestamp of when page was loaded)
 
 What isn't reported
 -------------------
@@ -22,8 +22,8 @@ What isn't reported
 * Computer
 * Department
 * Any label data
-* Anything not listed here
-* This is subject to change at any point in time
+* Anything that is not listed in the above section.
+* This is subject to change at any point in time, and we may add metrics for a better idea of how the app is being used.
 
 How is this data used, and who sees it?
 -------------------
