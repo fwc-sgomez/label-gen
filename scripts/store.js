@@ -16,6 +16,7 @@ const defaultSettings = {
 const defaultMetrics = {
     pageLoads: 0,
     labelsPrinted: 0,
+    disableMetrics: false,
     prints: [
         // {
         //     lbt: 'machwip',
