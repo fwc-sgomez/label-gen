@@ -27,6 +27,7 @@ class LabelGenMetrics {
     }
 
     setMetric(metricName, data) {
+        this.initMetricsIfNeeded()
         if (this.getMetric('disableMetrics') && (metricName != 'disableMetrics')) {
             console.log('metrics disabled, not setting metric.')
             return;
@@ -41,6 +42,7 @@ class LabelGenMetrics {
     }
 
     getMetric(metricName) {
+        this.initMetricsIfNeeded()
         const savedData = lsReadJson('metrics')
         if (savedData.hasOwnProperty(metricName)){
             return savedData[metricName]
@@ -54,6 +56,12 @@ class LabelGenMetrics {
             throw new Error('metrics disabled. will not export data (the easy way.)')
         } else {
             return btoa(lsRead('metrics')) // simple encode. security through obscurity. I doubt anyone will try to tamper with the metrics.
+        }
+    }
+
+    initMetricsIfNeeded() {
+        if (!lsRead('metrics')){
+            lsStore('metrics', {pageLoads: 0, labelsPrinted: 0, disableMetrics: false, prints: []})
         }
     }
 }

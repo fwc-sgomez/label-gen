@@ -1,5 +1,8 @@
 What's new?
 -------------------
+**version 1.3.0.2**
+* Fixed root cause of issue patched in 1.3.0.1. Metrics re-enabled.
+-------------------
 **version 1.3.0.1**
 * Disabled metrics temporarily to fix the app not loading correctly and label to display without barcode.
 -------------------
