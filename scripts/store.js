@@ -27,6 +27,7 @@ const defaultMetrics = {
 
 function init() {
     const settings = lsReadJson('settings')
+    const metrics = lsReadJson('metrics')
     if (!settings.init) {
         console.log('initialising settings!')
         lsStore('settings', defaultSettings)
@@ -37,6 +38,9 @@ function init() {
         console.log('app update reset settings!')
         lsStore('settings', defaultSettings)
         lsStore('prints', '[]')
+        if (!metrics) {
+            lsStore('metrics', defaultMetrics)
+        }
         showWarningMessage('App updated. Settings and print history reset to avoid compatibility issues.', 10, 'yellow')
         showWarningMessage('<a href=\'./docs?doc=updates\'>Click here to see what\'s new</a>', 10, 'yellow')
     }

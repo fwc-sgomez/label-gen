@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => { // hmm
     // setup stuff
     setFromSettings() // prepares defaults
-    metricsMgr = new LabelGenMetrics()
-    metricsMgr.startTimer()
-    metricsMgr.setMetric('pageLoads', Number.parseInt(metricsMgr.getMetric('pageLoads')) + 1)
+    //metricsMgr = new LabelGenMetrics()
+    //metricsMgr.startTimer()
+    //metricsMgr.setMetric('pageLoads', Number.parseInt(//metricsMgr.getMetric('pageLoads')) + 1)
 
     checkUrlParams() // then check url params so the rest can be updated accordingly
 
@@ -44,13 +44,13 @@ function checkUrlParams(){
     const urlDept = params.get('dept')
     const urlQty = params.get('qty')
     
-    const disableMetrics = params.get('disableMetrics') == 'true' ? true : false
-    const currentMetricState = metricsMgr.getMetric('disableMetrics')
-    metricsMgr.setMetric('disableMetrics', disableMetrics)
+    //const disableMetrics = params.get('disableMetrics') == 'true' ? true : false
+    //const currentMetricState = metricsMgr.getMetric('disableMetrics')
+    //metricsMgr.setMetric('disableMetrics', disableMetrics)
 
-    if (currentMetricState != disableMetrics) {
-        showWarningMessage(`Metrics have been ${disableMetrics ? 'disabled' : 'enabled'}.`, 5, 'yellow')
-    }
+    //if (currentMetricState != disableMetrics) {
+    //    showWarningMessage(`Metrics have been ${disableMetrics ? 'disabled' : 'enabled'}.`, 5, 'yellow')
+    //}
     
     // part number parsing stuff
     // I may be overcomplicating this line below. might need some updating the the handlePnParam function...
@@ -314,7 +314,7 @@ async function handlePrint() {
         showWarningMessage('Invalid PrintType selection.')
     }
 
-    metricsMgr.saveLabelMetric()
+    //metricsMgr.saveLabelMetric()
     saveImageToPrintHistory(imgData)
     loadPrintHistory()
 

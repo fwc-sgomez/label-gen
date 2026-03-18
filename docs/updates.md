@@ -1,5 +1,8 @@
 What's new?
 -------------------
+**version 1.3.0.1**
+* Disabled metrics temporarily to fix the app not loading correctly and label to display without barcode.
+-------------------
 **version 1.3.0.0**
 * Show copy of label instead of (bad) text-based version.
 * Added basic metrics. (Read about it here: [Metrics](https://fwc-sgomez.github.io/label-gen/docs?doc=metrics))
