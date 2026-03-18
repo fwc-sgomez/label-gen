@@ -3,7 +3,7 @@ Purpose
 
 * The web app reports simple metrics to record performance of the app and to better understand what is used and how.
 * The metrics recorded are very currently very minimal and are completely anonymous.
-* Major app updates may reset opt-out status. Minor app updates will not reset out-out status.
+* Major app updates may reset opt-out status. Minor app updates will not reset out-out status
 
 What is reported
 -------------------
@@ -22,8 +22,8 @@ What isn't reported
 * Computer
 * Department
 * Any label data
-* Anything that is not listed in the above section.
-* This is subject to change at any point in time, and we may add metrics for a better idea of how the app is being used.
+* Anything that is not listed in the above section
+* This is subject to change at any point in time, and we may add metrics for a better idea of how the app is being used
 
 How is this data used, and who sees it?
 -------------------
