@@ -20,11 +20,12 @@ function wsStart(){
     }
     
     ws.onerror = (e) => {
-        showWarningMessage(`error connecting to FWCPrintApp: ${e.data}\nattempt ${wsStartAttemps} of 3`);
+        // showWarningMessage(`error connecting to FWCPrintApp: ${e.data}\nattempt ${wsStartAttemps} of 3`);
         if (wsStartAttemps < 3){
             wsStart()
         } else {
-            showWarningMessage('Unable to connect to the print app.')
+            showWarningMessage('Unable to connect to the print app after 3 attempts. Make sure the app is installed.')
+            showWarningMessage('<a href=\'/docs?doc=appinstall\'>Click here to learn how to install it.</a>')
             wsStartAttemps = 0
         }
     }
