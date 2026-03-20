@@ -7,6 +7,7 @@
         <link rel='icon' type='image/x-icon' href='favicon.ico'>
         <!-- load scripts at the bottom of html -->
         <script src='https://cdn.jsdelivr.net/npm/jsbarcode@3.12.1/dist/barcodes/JsBarcode.code128.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/createjs@1.0.1/builds/1.0.0/createjs.min.js"></script>
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
         <link rel='stylesheet' href='styles/main.css'>
@@ -16,6 +17,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
+
     </head>
     <body>
         <noscript style="color: red; font-size: 36px;">Javascript is required for this tool to work properly. Please enable Javascript.</noscript>
@@ -65,7 +67,10 @@
         <div id='warnings' class='warnings noprint'></div>
 
         <div class='mainContent'>
-
+            <div>
+                <!-- TEST CANVAS -->
+                 <canvas id="can" class="canvasTest"></canvas>
+            </div>
             <div id='label'>
                 <div id='img'>
                     <img id='logo' class='logo' src='./img/fw.png' alt='Fibreworks Composites Logo'>
@@ -199,4 +204,5 @@
     <script src='scripts/printHistory.js'></script>
     <script src='scripts/hndLbChange.js'></script>
     <script src='scripts/ws.js'></script>
+    <script src='scripts/label.js'></script>
 </html>

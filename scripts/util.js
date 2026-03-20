@@ -124,3 +124,7 @@ function getSetting(setting) {
         console.warn(`could not get: key ${setting} does not exist in settings.`)
     }
 }
+
+function setDebugSettings() {
+    lsStore('v', 'true')
+}
