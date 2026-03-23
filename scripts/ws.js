@@ -25,7 +25,7 @@ function wsStart(){
             wsStart()
         } else {
             showWarningMessage('Unable to connect to the print app after 3 attempts. Make sure the app is installed.')
-            showWarningMessage('<a href=\'/docs?doc=appinstall\'>Click here to learn how to install it.</a>')
+            showWarningMessage('<a href=\'./docs?doc=appinstall\'>Click here to learn how to install it.</a>')
             wsStartAttemps = 0
         }
     }
