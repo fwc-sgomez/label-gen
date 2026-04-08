@@ -252,6 +252,17 @@ function updateLotBarcode(){
     }
 
     sslblot.innerHTML = lotCode
+
+    // adding date to qcpass and qcfail labels only
+    const lotdate = gebi('sslblotdate')
+    if ((lbType == 'qcpass') || (lbType == 'qcfail')){
+        lotdate.hidden = false
+        lotdate.innerHTML = new Date().toLocaleDateString()
+        sslblot.classList.add('lcDate')
+    } else {
+        sslblot.classList.remove('lcDate')
+        lotdate.hidden = true
+    }
 }
 
 function generateMachLot(woNum, cc = false){

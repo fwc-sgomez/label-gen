@@ -3,6 +3,7 @@ function lbTypeChange(value) {
         restoreFromInvC()
     }
     updateSetting("lbType", value)
+    updateLotBarcode()
     clearSubsections()
     cleanMidsection()
 
@@ -54,6 +55,7 @@ function lbTypeChange(value) {
         case 'qcpass': // qcpass
             qcSubsections('pass')
             wopo.textContent = 'PO Number:'
+            empdiv.hidden = false
             break;
         case 'qcfail': // qcfail
             qcSubsections('fail')
@@ -142,6 +144,7 @@ function loadStdMidsection() {
         <div class="subsection ssMono">
             <p class="note">LOT</p>
             <p id="sslblot" class="large"></p>
+            <p id="sslblotdate" class="lotDate" hidden></p>
         </div>
     `
 }
@@ -179,32 +182,33 @@ function qcSubsections(type) {
     const parent = gebi('lowersection')
     const indexOfBarcodeDiv = 0
     updateLotBarcode()
+    const midsectionElement = document.getElementById('midsection')
     if (type == 'pass') {
         // pass
-        parent.append(createLargeQcText('*QC PASS*', 'ss23', true))
+        midsectionElement.children[indexOfBarcodeDiv].className += ' ss23 vr'
+        midsectionElement.append(getStdSubsection('ssTri', 'Employee ID', false, true))
 
+        parent.append(createLargeQcText('*QC PASS*', 'ss23', true))
         parent.append(getStdSubsection('ssTri', 'Quantity', false, true))
 
     } else if (type == 'fail') {
         // fail
-        const ms = document.getElementById('midsection')
-        ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
-        ms.append(getStdSubsection('ssTri', 'Quantity', false, true))
+        midsectionElement.children[indexOfBarcodeDiv].className += ' ss23 vr'
+        midsectionElement.append(getStdSubsection('ssTri', 'NCR #', false, true))
         
         parent.append(createLargeQcText('*QC FAIL*', 'ss23', true))
-        parent.append(getStdSubsection('ssTri', 'NCR #', false, true))
+        parent.append(getStdSubsection('ssTri', 'Quantity', false, true))
+        
     } else if (type == 'fai') {
-        const ms = document.getElementById('midsection')
-        ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
-        ms.append(getStdSubsection('ssTri', 'Quantity', false, true))
+        midsectionElement.children[indexOfBarcodeDiv].className += ' ss23 vr'
+        midsectionElement.append(getStdSubsection('ssTri', 'Quantity', false, true))
 
         parent.append(createLargeQcText('********FAI********', 'ssMono', false))
 
         // parent.append(createStdSubsection('ssTri', 'NCR #', false, true))
     } else if (type == 'qci') {
-        const ms = document.getElementById('midsection')
-        ms.children[indexOfBarcodeDiv].className += ' ss23 vr'
-        ms.append(getStdSubsection('ssTri', 'Quantity', false, true))
+        midsectionElement.children[indexOfBarcodeDiv].className += ' ss23 vr'
+        midsectionElement.append(getStdSubsection('ssTri', 'Quantity', false, true))
 
         parent.append(createLargeQcText('QC INSPECTION', 'ssMono', false))
         

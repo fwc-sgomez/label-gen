@@ -248,6 +248,14 @@ progress {
     color: #FFF;
 }
 
+.lotDate {
+    margin-top: 0;
+}
+
+.lcDate {
+    margin-top: 5px;
+}
+
 @media print {
     @page {
         size: 54mm 101mm;

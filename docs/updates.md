@@ -1,5 +1,13 @@
 What's new?
 -------------------
+**version 1.3.0.3**
+* *QC Fail label:*
+* * Added date under LOT code
+* * Swapped location of Quantity and NCR # fields (for consistency)
+* *QC Pass label:*
+* * Added date under LOT code
+* * Added Employee ID field
+-------------------
 **version 1.3.0.2**
 * Fixed root cause of issue patched in 1.3.0.1. Metrics re-enabled.
 -------------------
