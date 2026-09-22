@@ -23,7 +23,7 @@ function wsStart(){
     ws.onerror = (e) => {
         // showWarningMessage(`error connecting to FWCPrintApp: ${e.data}\nattempt ${wsStartAttemps} of 3`);
         if (wsStartAttemps < wsMaxAttempts){
-            console.log(`[${new Date().toLocaleTimeString()}] failed to connect. attempt ${wsStartAttempts} of ${wsMaxAttempts}`)
+            console.log(`[${new Date().toLocaleTimeString()}] failed to connect. attempt ${wsStartAttemps} of ${wsMaxAttempts}`)
             setTimeout(() => {
                 wsStart()
             }, 1000)

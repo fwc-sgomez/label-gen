@@ -1,5 +1,10 @@
 What's new?
 -------------------
+**version 1.3.1.1 (branch)**
+* Added note to update bookmarks/shortcuts
+* Added automatic redirect to new url\
+**this version of the web app is behind the new versions on the new url and is no longer maintained.**
+-------------------
 **version 1.3.1.0**
 * *New label added*
 * * "S&R A-Style"

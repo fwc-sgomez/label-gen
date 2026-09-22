@@ -48,6 +48,20 @@ function checkUrlParams(){
     const urlRid = params.get('rid')
     const urlDept = params.get('dept')
     const urlQty = params.get('qty')
+    const urlNoRedirectNewPage = params.get('noRedirectNewPage')
+
+    if (!urlNoRedirectNewPage){
+        // redir to new page
+        const redirUrl = `https://fibreworks.github.io/label-gen?redirfrom=legacy${params.size > 0 ? '&' + params.toString() : ''}`
+        const newPageRedirTimeout = setTimeout(() => {
+            console.log(redirUrl)
+            window.location.href = redirUrl
+        }, 500)
+        showWarningMessage(`Attempting to redirect to new url... If it did not work, <a href="${redirUrl}">click here.</a>`)
+        // setTimeout(() => {
+            // showWarningMessage(`Redirect failed? <a href="${redirUrl}">Click here to go to new page</a>`)
+        // }, 5000)
+    }
     
     const disableMetrics = params.get('disableMetrics') == 'true' ? true : false
     const currentMetricState = metricsMgr.getMetric('disableMetrics')

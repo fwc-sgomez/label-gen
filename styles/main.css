@@ -278,6 +278,11 @@ progress {
     max-height: 100px;
 }
 
+.newurlbanner {
+    background-color: gold;
+    color: black !important;
+}
+
 @media print {
     @page {
         size: 54mm 101mm;
